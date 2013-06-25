@@ -1,6 +1,6 @@
 on("chat:message", function(msg) 
 {
-    var debug = false;
+	var debug = false;
 
 	function getValue(attributes, key)
 	{
@@ -653,6 +653,11 @@ on("chat:message", function(msg)
 					log("Message(" + message + ")");
 				}
 			}
+			else
+			{
+				skip = true;
+				sendChat("Check Bot", "/w " + msg.who + " That is not a valid skill choice.");
+			}
 
 			// Leftover data to handle
 			if (message.length > 0)
@@ -683,4 +688,3 @@ on("chat:message", function(msg)
 			sendChat(msg.who, "/em tried to do a skill check but they aren't even a character!");
 	}
 });
-

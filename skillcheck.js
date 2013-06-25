@@ -1,6 +1,6 @@
 on("chat:message", function(msg) 
 {
-    if(msg.type == "api" && msg.content.indexOf("!check ") !== -1) 
+	if(msg.type == "api" && msg.content.indexOf("!check ") !== -1) 
 	{
 		var newMsg = msg.content.replace("!check ", "");
 		var rollValue = randomInteger(20);
@@ -53,17 +53,17 @@ on("chat:message", function(msg)
 				else
 				{
 
-			        for (var j = 0; j < attributes.length; j++)
-			        {
-			        	if (attributes[j].get("name") == valueList[i])
-			        	{
-			        		checkValue += parseInt(attributes[j].get("current"), 10);
-			        		summation += attributes[j].get("name") + "(" + attributes[j].get("current") + ")";
+					for (var j = 0; j < attributes.length; j++)
+					{
+						if (attributes[j].get("name") == valueList[i])
+						{
+							checkValue += parseInt(attributes[j].get("current"), 10);
+							summation += attributes[j].get("name") + "(" + attributes[j].get("current") + ")";
 
-			        		if (debug)
-			        			log("Added(" + valueList[i] + ":" + attributes[j].get("current") + ") to total");
-			        	}
-			        }
+							if (debug)
+								log("Added(" + valueList[i] + ":" + attributes[j].get("current") + ") to total");
+						}
+					}
 				}
 				if (i < valueList.length - 1)
 					summation += " + ";
