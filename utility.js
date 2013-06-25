@@ -17,9 +17,51 @@ function getCharacter(playername)
 	return rtn;
 }
 
+function setAttributeValue(attribute, value)
+{
+	if (attribute)
+		attribute.set("current", value);
+}
+
+function createAttribute(character, attributename)
+{
+	var rtn = null;
+
+	if (character && attributename)
+	{
+		rtn = createObj("attribute", {
+			name: attributename,
+			characterid: character.get("_id")
+		});
+	}
+
+	return rtn;
+}
+
 function getAttribute(attributes, attribute)
 {
-	var rtn = 0
+	var rtn = null;
+
+	try
+	{
+		for (var i = 0; i < attributes.length; i++)
+		{
+			if (attributes[i].get("name") == attribute)
+			{
+				rtn = attributes[i];
+				break;
+			}
+		}
+	}
+	catch (ex) {}
+
+	return rtn;
+}
+
+function getAttributeValue(attributes, attribute)
+{
+	var rtn = null;
+
 	try
 	{
 		for (var i = 0; i < attributes.length; i++)
@@ -54,9 +96,15 @@ function getInitiative(token)
 	{
 		var character = getObj("character", represents);
 		var attributes = getAttributes(character);
-		var MOB = getAttribute(attributes, "MOB");
-		var AG = getAttribute(attributes, "AG");
-		var INIMOD = getAttribute(attributes, "INI%");
+		var MOB = getAttributeValue(attributes, "MOB");
+		var AG = getAttributeValue(attributes, "AG");
+		var INIMOD = getAttributeValue(attributes, "INI%");
+		if (!MOB)
+			MOB = 0;
+		if (!AG)
+			AG = 0;
+		if (!INIMOD)
+			INIMOD = 0;
 		initiative = MOB + AG + INIMOD;   
 	}
 	else
