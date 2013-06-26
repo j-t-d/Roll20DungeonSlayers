@@ -18,9 +18,16 @@ on("chat:message", function(msg)
 			var BOD = getAttributeValue(attributes, "BOD");
 			var CO = getAttributeValue(attributes, "CO");
 			var AV = getAttributeValue(attributes, "AV");
+			var ritalofscars = getAttributeValue(attributes, "Ritual of Scars");
 
 			checkValue = BOD + CO + AV;
 			summation = "BOD(" + BOD + ") + CO(" + CO + ") + AV(" + AV + ")";
+
+			if (ritalofscars)
+			{
+				checkValue += (ritalofscars * 2);
+				summation += " + Ritual of Scars(" + (ritalofscars * 2) + ")";
+			}
 
 			// Test to see if DEF exists, if not, create it.
 			var oDEF = getAttribute(attributes, "DEF");
@@ -34,13 +41,12 @@ on("chat:message", function(msg)
 			// Leftover data to handle
 			if (message.length > 0)
 			{
-				// Strip spaces
-				message = message.replace(/ /g, "");
+				var bonus = tallyLeftovers(message);
 				
-				if (isNumber(message))
+				if (bonus)
 				{
-					checkValue += parseInt(message, 10);
-					summation += " + (" + message + ")";
+					checkValue += bonus;
+					summation += " + (" + bonus + ")";
 					message = "";
 				}
 			}
@@ -65,9 +71,16 @@ on("chat:message", function(msg)
 			var BOD = getAttributeValue(attributes, "BOD");
 			var ST = getAttributeValue(attributes, "ST");
 			var WB = getAttributeValue(attributes, "WB");
+			var closecombat = getAttributeValue(attributes, "Close Combat");
 
 			checkValue = BOD + ST + WB;
 			summation = "BOD(" + BOD + ") + ST(" + ST + ") + WB(" + WB + ")";
+
+			if (closecombat)
+			{
+				checkValue += closecombat;
+				summation += " + Close Combat(" + closecombat + ")";
+			}
 
 			// Test to see if DEF exists, if not, create it.
 			var oMAT = getAttribute(attributes, "MAT");
@@ -81,13 +94,12 @@ on("chat:message", function(msg)
 			// Leftover data to handle
 			if (message.length > 0)
 			{
-				// Strip spaces
-				message = message.replace(/ /g, "");
+				var bonus = tallyLeftovers(message);
 				
-				if (isNumber(message))
+				if (bonus)
 				{
-					checkValue += parseInt(message, 10);
-					summation += " + (" + message + ")";
+					checkValue += bonus;
+					summation += " + (" + bonus + ")";
 					message = "";
 				}
 			}
@@ -112,9 +124,16 @@ on("chat:message", function(msg)
 			var MOB = getAttributeValue(attributes, "MOB");
 			var DX = getAttributeValue(attributes, "DX");
 			var WB = getAttributeValue(attributes, "WB");
+			var marksman = getAttributeValue(attributes, "Marksman");
 
 			checkValue = MOB + DX + WB;
 			summation = "MOB(" + MOB + ") + DX(" + DX + ") + WB(" + WB + ")";
+
+			if (marksman)
+			{
+				checkValue += marksman;
+				summation += " + Marksman(" + marksman + ")";
+			}
 
 			// Test to see if RAT exists, if not, create it.
 			var oRAT = getAttribute(attributes, "RAT");
@@ -128,13 +147,12 @@ on("chat:message", function(msg)
 			// Leftover data to handle
 			if (message.length > 0)
 			{
-				// Strip spaces
-				message = message.replace(/ /g, "");
+				var bonus = tallyLeftovers(message);
 				
-				if (isNumber(message))
+				if (bonus)
 				{
-					checkValue += parseInt(message, 10);
-					summation += " + (" + message + ")";
+					checkValue += bonus;
+					summation += " + (" + bonus + ")";
 					message = "";
 				}
 			}
@@ -182,13 +200,12 @@ on("chat:message", function(msg)
 			// Leftover data to handle
 			if (message.length > 0)
 			{
-				// Strip spaces
-				message = message.replace(/ /g, "");
+				var bonus = tallyLeftovers(message);
 				
-				if (isNumber(message))
+				if (bonus)
 				{
-					checkValue += parseInt(message, 10);
-					summation += " + (" + message + ")";
+					checkValue += bonus;
+					summation += " + (" + bonus + ")";
 					message = "";
 				}
 			}
@@ -214,6 +231,7 @@ on("chat:message", function(msg)
 			var DX = getAttributeValue(attributes, "DX");
 			var AV = getAttributeValue(attributes, "AV");
 			var TSCMOD = getAttributeValue(attributes, "TSC%");
+			var marksman = getAttributeValue(attributes, "Marksman");
 
 			checkValue = MND + DX - AV;
 			summation = "MND(" + MND + ") + DX(" + DX + ") - AV(" + AV + ")";
@@ -224,6 +242,12 @@ on("chat:message", function(msg)
 				summation += " + Bonus(" + TSCMOD + ")";
 			}
 			
+			if (marksman)
+			{
+				checkValue += marksman;
+				summation += " + Marksman(" + marksman + ")";
+			}
+
 			// Test to see if RAT exists, if not, create it.
 			var oTSC = getAttribute(attributes, "TSC");
 
@@ -236,13 +260,12 @@ on("chat:message", function(msg)
 			// Leftover data to handle
 			if (message.length > 0)
 			{
-				// Strip spaces
-				message = message.replace(/ /g, "");
+				var bonus = tallyLeftovers(message);
 				
-				if (isNumber(message))
+				if (bonus)
 				{
-					checkValue += parseInt(message, 10);
-					summation += " + (" + message + ")";
+					checkValue += bonus;
+					summation += " + (" + bonus + ")";
 					message = "";
 				}
 			}

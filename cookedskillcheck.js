@@ -662,13 +662,12 @@ on("chat:message", function(msg)
 			// Leftover data to handle
 			if (message.length > 0)
 			{
-				// Strip spaces
-				message = message.replace(/ /g, "");
+				var bonus = tallyLeftovers(message);
 				
-				if (isNumber(message))
+				if (bonus)
 				{
-					summation += " + (" + message + ")";
-					checkValue += parseInt(message, 10);
+					checkValue += bonus;
+					summation += " + (" + bonus + ")";
 					message = "";
 				}
 			}

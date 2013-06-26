@@ -129,3 +129,25 @@ function isNumber(n)
 {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
+
+function tallyLeftovers(msg)
+{
+	rtn = null;
+
+	if (msg.length > 0)
+	{
+		var bonus = 0;
+		var tokens = msg.split(" ");
+
+		for (var i = 0; i < tokens.length; i++)
+		{
+			if (isNumber(tokens[i]))
+				bonus += parseInt(tokens[i], 10);
+		}
+
+		if (bonus > 0)
+			rtn = bonus;
+	}
+
+	return rtn;
+}
