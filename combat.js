@@ -18,15 +18,15 @@ on("chat:message", function(msg)
 			var BOD = getAttributeValue(attributes, "BOD");
 			var CO = getAttributeValue(attributes, "CO");
 			var AV = getAttributeValue(attributes, "AV");
-			var ritalofscars = getAttributeValue(attributes, "Ritual of Scars");
+			var ritualofscars = getAttributeValue(attributes, "Ritual of Scars");
 
 			checkValue = BOD + CO + AV;
 			summation = "BOD(" + BOD + ") + CO(" + CO + ") + AV(" + AV + ")";
 
-			if (ritalofscars)
+			if (ritualofscars)
 			{
-				checkValue += (ritalofscars * 2);
-				summation += " + Ritual of Scars(" + (ritalofscars * 2) + ")";
+				checkValue += (ritualofscars * 2);
+				summation += " + Ritual of Scars(" + (ritualofscars * 2) + ")";
 			}
 
 			// Test to see if DEF exists, if not, create it.
