@@ -94,5 +94,29 @@
 		"Precious Jewelry (D20 GP)",
 		resolveTreasure({resolve: "M:5"}),
 		resolveTreasure({resolve: "M:10"})
+	],
+	"M" :
+	[
+		""
+		resolvePotion(),
+		resolvePotion(),
+		resolvePotion(),
+		resolvePotion(),
+		resolvePotion(),
+		resolveScroll(),
+		resolveScroll(),
+		resolveWeapon(),		
+		resolveScroll(),
+		resolveWeapon(),
+		resolveArmor(),
+		resolveScroll(),
+		resolveArmor(),
+		resolveScroll(),
+		resolveWeapon(),
+		resolveArmor(),
+		resolveWeapon(),
+		resolveUnique(),
+		resolveItem(),
+		resolveUnique()
 	]
 }
