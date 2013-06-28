@@ -224,155 +224,155 @@ on("chat:message", function(msg)
 		"S1":
 		[
 			"", "",
-			"Flicker Scroll",
-			"Flicker Scroll",
-			"Balance Scroll",
-			"Balance Scroll",
-			"Cleanse Scroll",
-			"Cleanse Scroll",
-			"Create Food Scroll",
-			"Create Food Scroll",
-			"Enchant Weapon Scroll",
-			"Enchant Weapon Scroll",
-			"Jump Scroll",
-			"Resist Poison Scroll",
-			"Resist Poison Scroll",
-			"Eavesdrop Scroll",
-			"Healing Touch Scroll",
-			"Healing Touch Scroll",
-			"Cloud of Remorse Scroll",
-			"Cloud of Remorse Scroll",
-			"Dirt Devil Scroll",
-			"Healing Aura Scroll",
-			"Healing Aura Scroll",
-			"Open Scroll",
-			"Open Scroll",
-			"Light Scroll",
-			"Light Scroll",
-			"Change Race Scroll",
-			"Change Race Scroll",
-			"Shadow Arrow Scroll",
-			"Mana Bread Scroll",
-			"Mana Bread Scroll",
-			"Defensive Shield Scroll",
-			"Defensive Shield Scroll",
-			"Fire Beam Scroll",
-			"Fire Beam Scroll",
-			"Throw Voice Scroll",
-			"Healberries Scroll",
-			"Healberries Scroll",
-			"Invigorate Scroll",
-			"Concealing Fog Scroll"
+			"Flicker",
+			"Flicker",
+			"Balance",
+			"Balance",
+			"Cleanse",
+			"Cleanse",
+			"Create Food",
+			"Create Food",
+			"Enchant Weapon",
+			"Enchant Weapon",
+			"Jump",
+			"Resist Poison",
+			"Resist Poison",
+			"Eavesdrop",
+			"Healing Touch",
+			"Healing Touch",
+			"Cloud of Remorse",
+			"Cloud of Remorse",
+			"Dirt Devil",
+			"Healing Aura",
+			"Healing Aura",
+			"Open",
+			"Open",
+			"Light",
+			"Light",
+			"Change Race",
+			"Change Race",
+			"Shadow Arrow",
+			"Mana Bread",
+			"Mana Bread",
+			"Defensive Shield",
+			"Defensive Shield",
+			"Fire Beam",
+			"Fire Beam",
+			"Throw Voice",
+			"Healberries",
+			"Healberries",
+			"Invigorate",
+			"Concealing Fog"
 		],
 		"S2":
 		[
 			"",
-			"Blind Scroll",
-			"Bestow Scent Scroll",
-			"Feather Fall Scroll",
-			"Scorching Blade Scroll",
-			"Arctic Weapon Scroll",
-			"Healing Light Scroll",
-			"Frighten Scroll",
-			"Arrow of Light Scroll",
-			"Shadow Scroll",
-			"Protective Shell Scroll",
-			"Levitate Scroll",
-			"Wall of Stone Scroll",
-			"Stumble Scroll",
-			"Transformation Scroll",
-			"Telekinesis Scroll",
-			"Calm Animal Scroll",
-			"Mirage Scroll",
-			"Slow Scroll",
-			"Weapon of Light Scroll",
-			"Water Walking Scroll"
+			"Blind",
+			"Bestow Scent",
+			"Feather Fall",
+			"Scorching Blade",
+			"Arctic Weapon",
+			"Healing Light",
+			"Frighten",
+			"Arrow of Light",
+			"Shadow",
+			"Protective Shell",
+			"Levitate",
+			"Wall of Stone",
+			"Stumble",
+			"Transformation",
+			"Telekinesis",
+			"Calm Animal",
+			"Mirage",
+			"Slow",
+			"Weapon of Light",
+			"Water Walking"
 		],
 		"S3":
 		[
 			"","",
-			"Hurl Scroll",
-			"Confusion Scroll",
-			"Displace Scroll",
-			"Fire Wall Scroll",
-			"Shadow Lance Scroll",
-			"Shadow Blade Scroll",
-			"Sternutation Scroll",
-			"Rust Scroll",
-			"Holy Hammer Scroll",
-			"Guardian Scroll",
-			"Lance of Light Scroll",
-			"Cloud of Death Scroll",
-			"Healing Ray Scroll",
-			"Chasm Scroll",
-			"Create Web Scroll",
-			"Shrink Scroll",
-			"Dominate Undead Scroll",
-			"Prolong Defensive Shield Scroll",
-			"Consecrate Water Scroll",
-			"Magic Lock Scroll",
-			"Magic Ladder Scroll",
-			"Dominate Animal Scroll",
-			"Strengthen Defensive Shield Scroll",
-			"Lightning Bolt Scroll",
-			"Fire Lance Scroll",
-			"Fire Breath Scroll",
-			"Sprint Scroll",
-			"Messenger Scroll",
-			"Curse Scroll",
-			"Blessing Scroll",
-			"Sleep Scroll",
-			"Breach Scroll",
-			"Give to Take Scroll",
-			"Paralyze Scroll",
-			"Arcane Sword Scroll",
-			"Penetrating Gaze Scroll",
-			"Silence Scroll",
-			"Befriend Scroll",
-			"Permeate Scroll"
+			"Hurl",
+			"Confusion",
+			"Displace",
+			"Fire Wall",
+			"Shadow Lance",
+			"Shadow Blade",
+			"Sternutation",
+			"Rust",
+			"Holy Hammer",
+			"Guardian",
+			"Lance of Light",
+			"Cloud of Death",
+			"Healing Ray",
+			"Chasm",
+			"Create Web",
+			"Shrink",
+			"Dominate Undead",
+			"Prolong Defensive Shield",
+			"Consecrate Water",
+			"Magic Lock",
+			"Magic Ladder",
+			"Dominate Animal",
+			"Strengthen Defensive Shield",
+			"Lightning Bolt",
+			"Fire Lance",
+			"Fire Breath",
+			"Sprint",
+			"Messenger",
+			"Curse",
+			"Blessing",
+			"Sleep",
+			"Breach",
+			"Give to Take",
+			"Paralyze",
+			"Arcane Sword",
+			"Penetrating Gaze",
+			"Silence",
+			"Befriend",
+			"Permeate"
 		],
 		"S4":
 		[
 			"","",
-			"Boil Blood Scroll",
-			"Summon Demon Scroll",
-			"Planar Gate Scroll",
+			"Boil Blood",
+			"Summon Demon",
+			"Planar Gate",
 			{func: resolveElemental},
-			"Ethereal Form Scroll",
-			"Burning Inferno Scroll",
-			"Dominate Scroll",
-			"Invisibility Scroll",
-			"Embiggen Scroll",
-			"Time Stop Scroll",
-			"Resurrection Scroll",
-			"Reset Cooldown Scroll",
-			"Spell Changer Scroll",
-			"Restoration Scroll",
-			"Fireball Scroll",
-			"Rout Undead Scroll",
-			"Dance Scroll",
-			"Ice Beam Scroll",
-			"Neutralize Poison Scroll",
-			"Healing Sphere Scroll",
-			"Chain Lightning Scroll",
-			"Magic Barrier Scroll",
-			"Raise Skeletons Scroll",
-			"Fly Scroll",
-			"Raise Zombies Scroll",
-			"Banish Scroll",
-			"Protective Dome Scroll",
-			"Destroy Magics Scroll",
-			"Call Shades Scroll",
-			"Shadow Pillar Scroll",
-			"Pillar of Light Scroll",
-			"Eyes and Ears Scroll",
-			"Teleport Scroll",
-			"Terrify Scroll",
-			"Necrologue Scroll",
-			"See Invisible Scroll",
-			"See Hidden Scroll",
-			"Vaporize Scroll",
-			"Body Explosion Scroll"
+			"Ethereal Form",
+			"Burning Inferno",
+			"Dominate",
+			"Invisibility",
+			"Embiggen",
+			"Time Stop",
+			"Resurrection",
+			"Reset Cooldown",
+			"Spell Changer",
+			"Restoration",
+			"Fireball",
+			"Rout Undead",
+			"Dance",
+			"Ice Beam",
+			"Neutralize Poison",
+			"Healing Sphere",
+			"Chain Lightning",
+			"Magic Barrier",
+			"Raise Skeletons",
+			"Fly",
+			"Raise Zombies",
+			"Banish",
+			"Protective Dome",
+			"Destroy Magics",
+			"Call Shades",
+			"Shadow Pillar",
+			"Pillar of Light",
+			"Eyes and Ears",
+			"Teleport",
+			"Terrify",
+			"Necrologue",
+			"See Invisible",
+			"See Hidden",
+			"Vaporize",
+			"Body Explosion"
 		],
 		"SA":
 		[
@@ -421,6 +421,250 @@ on("chat:message", function(msg)
 			"Metal Shield",
 			"Metal Shield",
 			"Tower Shield"
+		],
+		"EA":
+		[
+			"",
+			"Stand Up",
+			"Stand Up",
+			"Stand Up",
+			"Stand Up",
+			"Stand Up",
+			"Stand Up",
+			"Concentrate",
+			"Move up to MR",
+			"Ranged Attack",
+			"Melee Attack",
+			"Pick up Weapon",
+			"Pick up Weapon",
+			"Pick up Weapon",
+			"Draw Weapon",
+			"Draw Weapon",
+			"Draw Weapon",
+			"Cast Spell",
+			"Change Spell",
+			"Change Spell",
+			"Cast Target Spell"
+		],
+		"EB1":
+		[
+			"","",
+			"Flirt",
+			"Flirt",
+			"Resist Disease",
+			"Pick Pocket",
+			"Pick Pocket",
+			"Swim",
+			"Swim",
+			"Work Mechanism",
+			"Read Tracks",
+			"Read Tracks",
+			"Sneaking",
+			"Sneaking",
+			"Sneaking",
+			"Haggle",
+			"Haggle",
+			"Haggle",
+			"Perception",
+			"Perception",
+			"Perception",
+			"Knowledge",
+			"Knowledge",
+			"Knowledge",
+			"Knowledge",
+			"Knowledge",
+			"Hide",
+			"Hide",
+			"Hide",
+			"Hide",
+			"Open Lock",
+			"Open Lock",
+			"Climb",
+			"Climb",
+			"Disable Trap",
+			"Disable Trap",
+			"Ride",
+			"Ride",
+			"Jump",
+			"Appraise",
+			"Defy Poison"
+		],
+		"EB2":
+		[
+			"",
+			"Lightning Spells",
+			"Lightning Spells",
+			"Earth, Rock and Stone Spells",
+			"Ice, Frost and Water Spells",
+			"Fire Spells",
+			"Fire Spells",
+			"Healing Spells",
+			"Healing Spells",
+			"Healing Spells",
+			"Light Spells",
+			"Light Spells",
+			"Light Spells",
+			"Air and Transport Spells",
+			"Air and Transport Spells",
+			"Damage Spells",
+			"Shadow Spells",
+			"Shadow Spells",
+			"Protection Spells",
+			"Protection Spells",
+			"Protection Spells"
+		],
+		"EB3":
+		[
+			"",
+			"Hit Points",
+			"Hit Points",
+			"Hit Points",
+			"Defense",
+			"Defense",
+			"Defense",
+			"Initiative",
+			"Initiative",
+			"Initiative",
+			"Movement Rate",
+			"Movement Rate",
+			"Melee Attack",
+			"Melee Attack",
+			"Melee Attack",
+			"Ranged Attack",
+			"Ranged Attack",
+			"Spell Casting",
+			"Spell Casting",
+			"Targetted Spell Casting",
+			"Targetted Spell Casting"
+		],
+		"EB4":
+		[
+			"",
+			"Strength",
+			"Strength",
+			"Strength",
+			"Constitution",
+			"Constitution",
+			"Constitution",
+			"Constitution",
+			"Agility",
+			"Agility",
+			"Agility",
+			"Dexterity",
+			"Dexterity",
+			"Dexterity",
+			"Intellect",
+			"Intellect",
+			"Intellect",
+			"Intellect",
+			"Aura",
+			"Aura",
+			"Aura"
+		],
+		"EB5":
+		[
+			"",
+			"Body",
+			"Body",
+			"Body",
+			"Body",
+			"Body",
+			"Body",
+			"Body",
+			"Mobility",
+			"Mobility",
+			"Mobility",
+			"Mobility",
+			"Mobility",
+			"Mobility",
+			"Mind",
+			"Mind",
+			"Mind",
+			"Mind",
+			"Mind",
+			"Mind",
+			"Mind"
+		],
+		"ET1":
+		[
+			"","","","",
+			"Hero's Luck",			
+			"Hero's Luck",
+			"Arcane Explosion",
+			"Eagle Form",
+			"Blood Shield",
+			"Salvo",
+			"Cooldown Sacrifice",
+			"Bloody Healing",
+			"Lightning Thrower",
+			"Battle Healer",
+			"Lucky Devil",
+			"Smash Demons",
+			"Armorclad",
+			"Play Instrument",
+			"Disengage",
+			"Caregiver",
+			"Master of the Elements",
+			"Fire Magic",
+			"Defensive Stance",
+			"Defy Elementals",
+			"Nasty Shot",
+			"Bear Form",
+			"Blocker",
+			"Appraise",
+			"Artisan",
+			"Dodge",
+			"Charming",
+			"Education",
+			"Enhanced Cooldown",
+			"Hunter",
+			"Close Combat",
+			"Thievery",
+			"Marksman",
+			"Parry",
+			"Swimming",
+			"Conjurer",
+			"Endurance",
+			"Stealth",
+			"Acrobat",
+			"Swift",
+			"Master Climber",
+			"Brutal Blow",
+			"Resist Magic",
+			"Pickpocket",
+			"Rascal",
+			"Lockpicking",
+			"Battle Cry",
+			"Elemental Protection",
+			"Sharpshooter",
+			"Mounted Archer",
+			"Smash Armor",
+			"Armored Mage",
+			"Necromancy",
+			"Manipulator",
+			"Alertness",
+			"Injure",
+			"Slip Away",
+			"Beast Master",
+			"Lightning Reflexes",
+			"Steadfast",
+			"Animal Form",
+			"Smash Undead",
+			"Dual Wielding",
+			"Unarmed Master",
+			"Weapon Expert(WN)",
+			"Expertise",
+			"Spellchanger",
+			"Mindful Magic",
+			"Imp",
+			"Release Spell",
+			"Painful Change",
+			"Consuming Sprint",
+			"Painful Gain",
+			"Escape Death",
+			"Absorb Life",
+			"Spellmaster(Z)",
+			"Delay Death"
 		]
 	};
 
@@ -439,55 +683,420 @@ on("chat:message", function(msg)
 		});
 	}
 
-	function resolveElemental()
+	function resolveElemental(outputFunc)
 	{
 		sendChat(msg.who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
-			log("elemental roll result: " + total);
+			var spell = null; 
 			if (total <= 5)
-				sendOutput("REWARD IS: Summon Earth Elemental Scroll");
+				spell = "Summon Earth Elemental";
 			else if (total <= 10)
-				sendOutput("REWARD IS: Summon Fire Elemental Scroll");
+				spell = "Summon Fire Elemental";
 			else if (total <= 15)
-				sendOutput("REWARD IS: Summon Air Elemental Scroll");
+				spell = "Summon Air Elemental";
 			else if (total <= 20)
-				sendOutput("REWARD IS: Summon Water Elemental Scroll");
+				spell = "Summon Water Elemental";
+			if (outputFunc)
+				outputFunc(spell);
 		});
 	}
 
-	function resolveScrollTable(roll, table)
+
+	function resolveSpellTable(roll, table, outputFunc)
 	{
 		sendChat(msg.who, "/roll " + roll, function(results)
 		{
 			var total = rollResult(results);
-			tableLookup(table, total);
+			tableLookup(table, total, outputFunc);
+		});
+	}
+
+	function resolveSpell(outputFunc)
+	{
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			if (total <= 8)
+				resolveSpellTable("2D20", "S1", outputFunc);
+			else if (total <= 14)
+				resolveSpellTable("D20", "S2", outputFunc);				
+			else if (total <= 18)
+				resolveSpellTable("2D20", "S3", outputFunc);
+			else
+				resolveSpellTable("2D20", "S4", outputFunc);
 		});
 	}
 
 	function resolveScroll()
 	{
+		function scrollOutput(item)
+		{
+			sendOutput(item + " Scroll");
+		}		
+		resolveSpell(scrollOutput);
+	}
+
+	function resolveEffectTypeFreeAction(effectState)
+	{
+		log("Resolving Free Action");
 		sendChat(msg.who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
-			log("scroll lookup roll result: " + total);
-			if (total <= 8)
-				resolveScrollTable("2D20", "S1");
+			var freeAction = getFromTable("EA", total);
+			if (freeAction)
+			{
+				effectState.effects.push("Free Action - " + freeAction);
+				resolveEffectType(effectState);
+			}
+		});
+	}
+
+	function resolveEffectTypeBonusModifier(effect, limit1, limit2, effectState)
+	{
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var bonus = 0;
+			var total = rollResult(results);
+			if (total <= limit1)
+				bonus++;
+			else if (total <= limit2)
+				bonus += 2;
+			else if (total <= 20)
+				bonus += 3;
+			effectState.effects.push(effect + " +" + bonus);
+			resolveEffectType(effectState);
+		});
+	}
+
+	function resolveEffectTypeCheck(effectState)
+	{
+		log("Resolving Check");
+		sendChat(msg.who, "/roll 2D20", function(results)
+		{
+			var total = rollResult(results);
+			var checkType = getFromTable("EB1", total);
+			if (checkType)
+				resolveEffectTypeBonusModifier(checkType, 10, 17, effectState);
+		});
+	}
+
+	function resolveEffectTypeSpell(effectState)
+	{
+		log("Resolvoing spell");
+		function spellLookup(spell)
+		{
+			resolveEffectTypeBonusModifier(spell, 15, 19, effectState);
+		}
+		resolveSpell(spellLookup);
+
+	}
+
+	function resolveEffectTypeSpellGroup(effectState)
+	{
+		log("Resolving Spell Group");
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			var spellGroup = getFromTable("EB2", total);
+			if (spellGroup)
+				resolveEffectTypeBonusModifier(spellGroup, 15, 19, effectState);
+		});
+	}
+
+	function resolveEffectTypeCombatValue(effectState)
+	{
+		log("Resolving Combat Value");
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			var combatValue = getFromTable("EB3", total);
+			if (combatValue)
+				resolveEffectTypeBonusModifier(combatValue, 10, 17, effectState);
+		});
+	}
+
+	function resolveEffectTypeTrait(effectState)
+	{
+		log("Resolving trait");
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			var trait = getFromTable("EB4", total);
+			if (trait)
+				resolveEffectTypeBonusModifier(trait, 10, 17, effectState);
+		});
+	}
+
+	function resolveEffectTypeAttribute(effectState)
+	{
+		log("Resolving attribute");
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			var attribute = getFromTable("EB5", total);
+			if (attribute)
+				resolveEffectTypeBonusModifier(attribute, 10, 17, effectState);
+		});
+	}
+
+	function resolveEffectTypeBonus(effectState)
+	{
+		log("Resolving bonus");
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			if (total <= 9)
+				resolveEffectTypeCheck(effectState);
+			else if (total <= 13)
+				resolveEffectTypeSpell(effectState);
+			else if (total == 14)
+				resolveEffectTypeSpellGroup(effectState);
+			else if (total <= 17)
+				resolveEffectTypeCombatValue(effectState);
+			else if (total <= 19)
+				resolveEffectTypeTrait(effectState);
+			else if (total <= 20)
+				resolveEffectTypeAttribute(effectState);
+		});
+	}
+
+	function resolveEffectTalentModifier(talent, bonus, effectState)
+	{
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);		
+			if (total <= 12)
+				bonus++;
+			else if (total <= 17)
+				bonus += 2;
+			else if (total <= 19)
+				bonus += 3;
+			else if (total <= 20)
+			{
+				bonus += 1;
+				resolveEffectTalentModifier(talent, bonus, effectState);
+			}
+
+			if (total != 20)
+			{
+				effectState.effects.push(talent + " +" + bonus);
+				resolveEffectType(effectState);
+			}
+		});
+	}
+
+	function resolveEffectTypeTalent(effectState)
+	{
+		sendChat(msg.who, "/roll 4D20", function(results)
+		{
+			var total = rollResult(results);
+			var talent = getFromTable("ET1", total);
+			if (talent)
+			{
+				log("Resolving talent: " + talent);
+				resolveEffectTalentModifier(talent, 0, effectState);
+			}
+		});
+	}
+
+	function resolveSpellEffectCharges(spell, effectState)
+	{
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			effectState.effects.push(spell + " (" + total + " charges)");
+			resolveEffectType(effectState);
+		});
+	}
+
+	function resolveSpellEffectCooldown(spell, effectState, isAll)
+	{
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			var rounds = 0;
+			if (total <= 10)
+				rounds = 1;
 			else if (total <= 14)
-				resolveScrollTable("D20", "S2");				
+				rounds = 2;
+			else if (total <= 17)
+				rounds = 3;
+			else if (total <= 19)
+				rounds = 4;
+			else if (total == 20)
+				rounds = 5;
+			if (spell)
+				effectState.effects.push(spell + " cooldown reduced " + rounds + " rounds");
+			else if (!isAll)
+				effectState.effects.push("A known spell cooldown reduced " + rounds + " rounds");
+			else 
+				effectState.effects.push("All known spells cooldown reduced " + rounds + " rounds");
+			resolveEffectType(effectState);
+		});
+	}
+
+	function resolveSpellEffectDaily(spell, effectState)
+	{
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var daily = "";
+			var total = rollResult(results);
+			if (total <= 16)
+				daily = "1x daily";
 			else if (total <= 18)
-				resolveScrollTable("2D20", "S3");
-			else
-				resolveScrollTable("2D20", "S4");
+				daily = "2x daily";
+			else if (total == 19)
+				daily = "3x daily";
+			else if (total == 20)
+				daily = "permanently";
+			effectState.effects.push(spell + " ignore cooldown " + daily);
+			resolveEffectType(effectState);
+		});
+	}
+
+	function resolveEffectTypeSpellEffect(effectState)
+	{
+		function spellResult(spell)
+		{
+			log("Resolving spell effect: " + spell);			
+			sendChat(msg.who, "/roll D20", function(results)
+			{
+				var total = rollResult(results);
+				if (total <= 12)
+				{
+					effectState.effects.push(spell);
+					resolveEffectType(effectState);
+				}
+				else if (total <= 16)
+					resolveSpellEffectCharges(spell, effectState);
+				else if (total == 17)
+					resolveSpellEffectCooldown(spell, effectState);
+				else if (total == 18)
+					resolveSpellEffectCooldown(null, effectState);
+				else if (total == 19)
+					resolveSpellEffectCooldown(null, effectState, true);
+				else if (total == 20)
+					resolveSpellEffectDaily(spell, effectState);
+			});
+		}
+		resolveSpell(spellResult);
+	}
+
+	function resolveEffectType(effectState)
+	{
+		log("Have " + effectState.effects.length + "/" + effectState.maxEffects + " (" + (effectState.effects.length < effectState.maxEffects) + ") effects so far");
+		if (effectState.effects.length < effectState.maxEffects)
+		{
+			sendChat(msg.who, "/roll D20", function(results)
+			{
+				var total = rollResult(results);
+				if (total <= 5)
+					resolveEffectTypeFreeAction(effectState);
+				else if (total <= 13)
+					resolveEffectTypeBonus(effectState);
+				else if (total <= 17)
+					resolveEffectTypeTalent(effectState);
+				else if (total <= 20)
+					resolveEffectTypeSpellEffect(effectState);
+			});
+		}
+		else
+		{			
+			var output = "";
+			if (effectState.bonus)
+				output += "+" + effectState.bonus + " ";
+			output += effectState.item;
+			if (effectState.effects.length > 0)
+				output += " of " + effectState.effects.join(", ");
+			if (effectState.outputFunc)
+				effectState.outputFunc(output);
+			else				
+				sendOutput("REWARD: " + output);
+		}
+	}
+
+	function resolveOtherEffects(effectState)
+	{
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			if (total <= 15)
+			{
+				// no effect
+			}
+			else if (total <= 18)
+				effectState.maxEffects++;
+			else if (total <= 19)
+				effectState.maxEffects += 2;
+			else if (total == 20)
+			{
+				effectState.maxEffects += 2;
+				// resolveEffectBonus(item, bonus, maxEffects) // Could be this too!?! Does roll again mean the entire table?
+				resolveOtherEffects(effectState);
+			}
+
+			if (total != 20) // not a roll again
+			{
+				log("Have " + effectState.maxEffects + " effects to resolve");
+				effectState.effects = [];
+				resolveEffectType(effectState);
+			}
+		});
+	}
+
+	// if bonus is not set (to 0) it'll assume it's a non wb/av item and not print or calculate it
+	function resolveEffectBonus(effectState)
+	{
+		log("Resolving effects for " + effectState.item);
+		if (!effectState.maxEffects)
+			effectState.maxEffects = 0;
+
+		if (effectState.bonus !== null)
+		{
+			sendChat(msg.who, "/roll D20", function(results)
+			{
+				var total = rollResult(results);
+				if (total <= 1)		
+					effectState.maxEffects++;
+				else if (total <= 17)
+					effectState.bonus++;
+				else if (total <= 19)
+					effectState.bonus += 2;
+				else if (total == 20)
+					effectState.bonus += 3;
+				log("Item Bonus: " + effectState.bonus);
+
+				resolveOtherEffects(effectState);
+			});			
+		}
+		else
+			resolveOtherEffects(effectState);
+	}
+
+	function resolveArmorParts(args, outputFunc)
+	{
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			tableLookup("AP", total, outputFunc);
 		});
 	}
 
 	function resolveArmor()
 	{
+		function armorLookup(item)
+		{
+			function armorOutput(loot)
+			{
+				sendOutput("REWARD IS: " + loot);
+			}
+			resolveEffectBonus({item: item, bonus: 0, maxEffects: 0, effects: []});
+		}
 		sendChat(msg.who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
-			tableLookup("SA", total);
+			tableLookup("SA", total, armorLookup);
 		});
 	}
 
@@ -512,8 +1121,9 @@ on("chat:message", function(msg)
 		return data.total;
 	}
 
-	function tableLookup(table, index)
+	function getFromTable(table, index)
 	{
+		var loot = null;
 		table = table.toUpperCase();
 		log("Table Lookup: " + table + "[" + index + "]");
 		var currentTable = lootTable[table];
@@ -524,29 +1134,39 @@ on("chat:message", function(msg)
 				index = currentTable.length - 1;
 				log("Clamped too large roll to: " + index);
 			}
-			var loot = currentTable[index];
-			if (loot)
+			loot = currentTable[index];
+			if (!loot)
+				log("Unknown loot in table " + table + " at index: " + index);
+		}	
+		else
+			log("Unknown treasure table: " + table);		
+		return loot;	
+	}
+
+	function tableLookup(table, index, outputFunc)
+	{
+		var loot = getFromTable(table, index);
+		if (loot)
+		{
+			if (typeof loot === 'object')
 			{
-				if (typeof loot === 'object')
-				{
-					if (loot.func)
-						loot.func(loot.args);
-					else
-						log("Unknown loot object: " + loot);
-				}
+				if (loot.func)
+					loot.func(loot.args, outputFunc);
+				else
+					log("Unknown loot object: " + loot);
+			}
+			else
+			{
+				if (outputFunc)
+					outputFunc(loot);
 				else
 					sendOutput("REWARD IS: " + loot);
 			}
-			else
-				log("Unknown loot in table " + table + " at index: " + index);
 		}
-		else
-			log("Unknown treasure table: " + table);
 	}
 
 	function rollCheck(roll, table, isExact, ctnCheckNumber)
 	{
-		log("roll check: " + [roll, table, isExact, ctnCheckNumber]);
 		sendChat(msg.who, "/roll " + roll, function(results)
 		{
 			var result = false;
@@ -585,7 +1205,6 @@ on("chat:message", function(msg)
 					var currentRoll = treasureRegex.exec(treasureRolls[treasureIndex]);
 					if (currentRoll)
 					{
-						log("matched: " + currentRoll);
 						var isExact = currentRoll[1] === "#";
 						var numChecks = currentRoll[2] === "" && 1 || parseInt(currentRoll[2], 10);
 						var table = currentRoll[3];
