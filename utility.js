@@ -329,3 +329,39 @@ function rollFormat(who, msg, ctnData, ctn, rollData)
 
 	return rtn;
 }
+
+on("chat:message", function(msg) 
+{
+	var debug = true;
+	
+	if (msg.type == "api" && msg.content.indexOf("!setup") !== -1)
+	{
+		var character = getCharacter(msg.who);
+		var attributes = null;
+		var message = "";
+		var i = 0;
+		var attribList = ["BOD","MND","MOB","ST","CO","AG","DX","IN","AU","AV","WB","SPC%","TSC%","INI%"];
+		var attrib = null;
+
+		if (character)
+		{
+			message = msg.content.replace("!setup", "").toLowerCase();
+
+			attributes = getAttributes(character);
+
+			if (attributes)
+			{
+				for (i = 0; i < attribList.length; i++)
+				{
+					attrib = getAttribute(attributes, attribList[i]);
+
+					if (!attrib)
+					{
+						attrib = createAttribute(character, attribList[i]);
+						setAttributeValue(attrib, 0);
+					}
+				}
+			}
+		}
+	}
+});
