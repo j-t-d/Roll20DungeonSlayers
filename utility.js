@@ -329,3 +329,59 @@ function rollFormat(who, msg, ctnData, ctn, rollData)
 
 	return rtn;
 }
+
+on("chat:message", function(msg) 
+{
+	if (msg.type == "api" && msg.content.indexOf("!setup") !== -1)
+	{
+		var character = getCharacter(msg.who);
+		var attributes = null;
+		var message = "";
+		var i = 0;
+		var attribList = ["BOD","MND","MOB","ST","CO","AG","DX","IN","AU","AV","WB","SPC%","TSC%","INI%"];
+		var attrib = null;
+
+		if (character)
+		{
+			message = msg.content.replace("!setup", "").toLowerCase();
+
+			attributes = getAttributes(character);
+
+			if (attributes)
+			{
+				for (i = 0; i < attribList.length; i++)
+				{
+					attrib = getAttribute(attributes, attribList[i]);
+
+					if (!attrib)
+					{
+						attrib = createAttribute(character, attribList[i]);
+						setAttributeValue(attrib, 0);
+					}
+				}
+			}
+		}
+	}
+});
+
+on("chat:message", function(msg) 
+{
+	if (msg.type == "api" && msg.content.indexOf("!help") !== -1)
+	{
+		var charName = msg.who.split(" ")[0];
+
+		sendChat("HelpBot", "/w " +  charName + " Commands available to you...");
+		sendChat("HelpBot", "/w " +  charName + " !setup (Add all required attributes to your char sheet)");
+		sendChat("HelpBot", "/w " +  charName + " !def (Roll a defense)");
+		sendChat("HelpBot", "/w " +  charName + " !melee (Roll a melee attack)");
+		sendChat("HelpBot", "/w " +  charName + " !ranged (Roll a ranged attack)");
+		sendChat("HelpBot", "/w " +  charName + " !spell (Roll a non-targeted spell)");
+		sendChat("HelpBot", "/w " +  charName + " !tspell (Roll a targeted spell)");
+		sendChat("HelpBot", "/w " +  charName + " !chk skillname (Roll a skillcheck for a skill)");
+		sendChat("HelpBot", "/w " +  charName + " !chk help (List all skills !chk can roll for you)");
+		sendChat("HelpBot", "/w " +  charName + " !brew (Roll for potion making)");
+		sendChat("HelpBot", "/w " +  charName + " !scribe (Roll for scroll writing)");
+		sendChat("HelpBot", "/w " +  charName + " !craftmagic (Roll for mage portion of item creation)");
+		sendChat("HelpBot", "/w " +  charName + " !craftitem (Roll for artisan portion of item creation");
+	}
+});
