@@ -95,7 +95,7 @@ function getAttributes(character)
 
 function getInitiative(token)
 {
-	var initiative = 0;
+	var initiative = null;
 	// check to see if character
 	var represents = token.get("_represents");
 	if (represents && represents !== "")
@@ -115,10 +115,10 @@ function getInitiative(token)
 	}
 	else
 	{
-		initiative = parseInt(token.get("bar3_value"), 10);
+		var mobInitiative = token.get("bar3_value");
+		if (mobInitiative && (mobInitiative !== ""))
+			initiative = parseInt(token.get("bar3_value"), 10);
 	}
-	if (isNaN(initiative))
-		initiative = 0;
 	return initiative;
 }
 

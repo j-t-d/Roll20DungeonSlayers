@@ -665,6 +665,183 @@ on("chat:message", function(msg)
 			"Absorb Life",
 			"Spellmaster(Z)",
 			"Delay Death"
+		],
+		"G":
+		[
+			"","","",
+			"Dragonscale",
+			"Stuffed Animal",
+			"Flute",
+			"Comb",
+			"Desiccated Eyeball",
+			"Colorful Feather",
+			"Gnarly Root",
+			"Bandana",
+			"Bird Claw",
+			"Tiara",
+			"Ball",
+			"Belt",
+			"Gloves",
+			"Scarf",
+			"Hat",
+			"Sparkling Crystal",
+			"Headband",
+			"Broach",
+			"Bracelet",
+			"Gem",
+			"Bracelet",
+			"Cloak",
+			"Mead Horn",
+			"Mantle",
+			"Staff",
+			"Boots",
+			"Tunic",
+			"Sandals",
+			"Chain",
+			"Mask",
+			"Surcoat",
+			"Leather Strap",
+			"Tooth",
+			"Earring",
+			"Candle Holder",
+			"Paw",
+			"Ring",
+			"Jug",
+			"Quiver",
+			"Claw",
+			"Statuette",
+			"Chalice",
+			"Scabbard",
+			"Vase",
+			"Dice",
+			"Drum",
+			"Scepter",
+			"Staff",
+			"Harp",
+			"Doll",
+			"Crown",
+			"Bowl",
+			"Carved Figurine",
+			"Shrunken Head",
+			"Mirror",
+			"Skull",
+			"Dried Heart",
+			"Demon Tongue"
+		],
+		"X":
+		[
+			"","",
+			"Necklace of Regeneration",
+			"Fudger's Deck o' Cards",
+			"Magic Carpet",
+			"Scepter of Fireballs",
+			"Girdle of Troll Strength",
+			"Gloves of Maiming",
+			"Elven Saddle",
+			"Ring of Protection +2",
+			"Ring of Protection +2",
+			"Bowman's Vambrace",
+			"Bowman's Vambrace",
+			"Elven Boots",
+			"Elven Boots",
+			"Elven Cloak of Stealth",
+			"Elven Cloak of Stealth",
+			"Ring of Protection +1",
+			"Ring of Protection +1",
+			"Ring of Protection +1",
+			"Ring of Protection +1",
+			"Phantasmal Messenger",
+			"Phantasmal Messenger",
+			"Phantasmal Messenger",
+			"Cooldown Ring",
+			"Cooldown Ring",
+			"Ring of Spells",
+			"Ring of Spells",
+			"Ring of Spellchange",
+			"Ring of Spellchange",
+			"Sleeping Dust",
+			"Sleeping Dust",
+			{func:resolveSpellStaff},
+			"Warhorn",
+			"Charm of Levitation",
+			"Emerald Key",
+			"Ring of Protection +3",
+			"Magic Quiver",
+			"Cloak of the Watcher",
+			"Ring of Invisibility",
+			"Crystal Ball"
+		],
+		"WR":
+		[
+			"",
+			{func:resolveTreasure, args:{roll: "D20", desc: " crossbow bolts"}},
+			{func:resolveTreasure, args:{roll: "D20", desc: " crossbow bolts"}},
+			"Light crossbow",
+			"Heavy crossbow",
+			{func:resolveTreasure, args:{roll: "D20", desc: " arrows"}},
+			{func:resolveTreasure, args:{roll: "D20", desc: " arrows"}},
+			"Short Bow",
+			"Short Bow",
+			"Short Bow",
+			"Short Bow",
+			"Short Bow",
+			"Long Bow",
+			"Long Bow",
+			"Long Bow",
+			"Elven Bow",
+			"Sling",
+			"Spear",
+			"Spear",
+			"Spear",
+			"Throwing Knife"
+		],
+		"WM1":
+		[
+			"",
+			"Two-handed Sword",
+			"Two-handed Sword",
+			"Dagger",
+			"Dagger",
+			"Dagger",
+			"Dagger",
+			"Halberd",
+			"Great Axe",
+			"Broad Sword",
+			"Broad Sword",
+			"Broad Sword",
+			"Short Sword",
+			"Short Sword",
+			"Short Sword",
+			"Long Sword",
+			"Long Sword",
+			"Long Sword",
+			"Axe",
+			"Axe",
+			"Dwarven Axe"
+		],
+		"WM2":
+		[
+			"",
+			"Flail",
+			"Hammer",
+			"Hammer",
+			"Hammer",
+			"Quarterstaff",
+			"Club",
+			"Battle Flail",
+			"Battle Flail",
+			"Brass Knuckles",
+			"Spear",
+			"Spear",
+			"Spear",
+			"War Hammer",
+			"War Hammer",
+			"War Hammer",
+			"War Hammer",
+			"Mace",
+			"Mace",
+			"Mace",
+			"Mace"
 		]
 	};
 
@@ -673,6 +850,15 @@ on("chat:message", function(msg)
 	{
 		sendChat("Treasure", "/w " + msg.who + " " + text);
 
+	}
+
+	function resolveSpellStaff()
+	{
+		function spellLookup(spell)
+		{
+			sendOutput("REWARD IS: Spellstaff of " + spell);
+		}
+		resolveSpell(spellLookup);
 	}
 
 	function resolvePotion()
@@ -1102,17 +1288,78 @@ on("chat:message", function(msg)
 
 	function resolveItem()
 	{
-		sendOutput("resolveItem");
+		function itemLookup(item)
+		{
+			function itemOutput(loot)
+			{
+				sendOutput("REWARD IS: " + loot);
+			}
+			resolveEffectBonus({item: item, maxEffects: 1, effects: []});
+		}
+		sendChat(msg.who, "/roll 3D20", function(results)
+		{
+			var total = rollResult(results);
+			tableLookup("G", total, itemLookup);
+		});
 	}
 
 	function resolveUnique()
 	{
-		sendOutput("resolveUnique");
+		sendChat(msg.who, "/roll 2D20", function(results)
+		{
+			var total = rollResult(results);
+			tableLookup("X", total);
+		});
+	}
+
+	function resolveWeaponType(table, outputFunc)
+	{
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			tableLookup(table, total, outputFunc);
+		});
+	}
+
+	function resolveRangedWeapon(outputFunc)
+	{
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			tableLookup("WR", total, outputFunc);
+		});
+	}
+
+	function resolveMeleeWeapon(outputFunc)
+	{
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			if (total <= 12)
+				resolveWeaponType("WM1", outputFunc);
+			else if (total <= 20)
+				resolveWeaponType("WM2", outputFunc);
+		});
 	}
 
 	function resolveWeapon()
 	{
-		sendOutput("resolveWeapon");
+		function weaponLookup(item)
+		{
+			function weaponOutput(loot)
+			{
+				sendOutput("REWARD IS: " + loot);
+			}
+			resolveEffectBonus({item: item, bonus: 0, maxEffects: 0, effects: []});
+		}
+		sendChat(msg.who, "/roll D20", function(results)
+		{
+			var total = rollResult(results);
+			if (total <= 5)
+				resolveRangedWeapon(weaponLookup);
+			else if (total <= 20)
+				resolveMeleeWeapon(weaponLookup);
+		});
 	}
 
 	function rollResult(results)
@@ -1186,7 +1433,7 @@ on("chat:message", function(msg)
 		});					
 	}
 
-	function resolveTreasure(args)
+	function resolveTreasure(args, outputFunc)
 	{
 		if (args && (typeof args === 'object'))
 		{
@@ -1237,7 +1484,11 @@ on("chat:message", function(msg)
 			{
 				sendChat(msg.who, "/roll " + args.roll, function(results)
 				{
-					sendOutput("REWARD IS: " + rollResult(results) + " " + args.desc);
+					var loot = rollResult(results) + " " + args.desc;
+					if (outputFunc)
+						outputFunc(loot);
+					else
+						sendOutput("REWARD IS: " + rollResult(results) + " " + args.desc);
 				});
 			}
 			else

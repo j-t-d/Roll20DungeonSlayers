@@ -2,9 +2,9 @@ on("chat:message", function(msg)
 {
     if(msg.type == "api")  
     {
-        if (msg.content.indexOf("!findMobs") == 0)
+        if (msg.content.indexOf("!findMobs") === 0)
         {
-            log("Looking for mob page.")
+            log("Looking for mob page.");
             var mobPageId = null;
             _.each(findObjs({_type: "page", name : "Mob Page"}), function(obj)
             {
@@ -27,7 +27,7 @@ on("chat:message", function(msg)
                 }
             });
         }
-        else if (msg.content.indexOf("!startCombat") == 0)
+        else if (msg.content.indexOf("!startCombat") === 0)
         {
             var turnOrder = [];
 
@@ -42,10 +42,14 @@ on("chat:message", function(msg)
                     // check if dead
                     var isDead = token.get("status_dead");
                     if (!isDead)
-                        turnOrder.push({id: token.get("_id"), pr: getInitiative(token)});                            
+                    {
+                        var initiative = getInitiative(token);
+                        if (initiative)
+                            turnOrder.push({id: token.get("_id"), pr: initiative});                            
+                    }
                 }
             );
-            
+            sendChat(msg.who, "/w " + msg.who + " initiatives calculated!");
             setInitiative(turnOrder);            
         }
     }
