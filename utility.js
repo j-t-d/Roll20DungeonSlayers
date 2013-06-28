@@ -42,18 +42,14 @@ function getAttribute(attributes, attribute)
 {
 	var rtn = null;
 
-	try
+	for (var i = 0; i < attributes.length; i++)
 	{
-		for (var i = 0; i < attributes.length; i++)
+		if (attributes[i].get("name") == attribute)
 		{
-			if (attributes[i].get("name") == attribute)
-			{
-				rtn = attributes[i];
-				break;
-			}
+			rtn = attributes[i];
+			break;
 		}
 	}
-	catch (ex) {}
 
 	return rtn;
 }
@@ -62,18 +58,16 @@ function getAttributeValue(attributes, attribute)
 {
 	var rtn = null;
 
-	try
+	for (var i = 0; i < attributes.length; i++)
 	{
-		for (var i = 0; i < attributes.length; i++)
+		if (attributes[i].get("name") == attribute)
 		{
-			if (attributes[i].get("name") == attribute)
-			{
-				rtn = parseInt(attributes[i].get("current"), 10);    
-				break;
-			}
+			rtn = parseInt(attributes[i].get("current"), 10);    
+			break;
 		}
 	}
-	catch (ex) {}
+	if (isNaN(rtn))
+		rtn = null;
 
 	return rtn;
 }
@@ -90,6 +84,46 @@ function getAttributes(character)
 		});
 	}
 
+	return rtn;
+}
+
+function createAbility(character, abilityName)
+{
+	var rtn = null;
+	if (character && abilityName)
+	{
+		rtn = createObj("ability", {
+			name: abilityName,
+			characterid: character.get("id")
+		});
+	}
+	return rtn;
+}
+
+function getAbility(abilities, ability)
+{
+	var rtn = null;
+	for (var i = 0; i < abilities.length; i++)
+	{
+		if (abilities[i].get("name") == ability)
+		{
+			rtn = abilities[i];
+			break;
+		}
+	}
+	return rtn;
+}
+
+function getAbilities(character)
+{
+	var rtn = null;
+	if (character)
+	{
+		rtn = findObjs({
+			_type: "ability",
+			_characterid: character.get('_id')			
+		});
+	}
 	return rtn;
 }
 
@@ -340,6 +374,8 @@ on("chat:message", function(msg)
 		var i = 0;
 		var attribList = ["BOD","MND","MOB","ST","CO","AG","DX","IN","AU","AV","WB","SPC%","TSC%","INI%"];
 		var attrib = null;
+		var abilities = null;
+		var ability = null;
 
 		if (character)
 		{
@@ -360,6 +396,15 @@ on("chat:message", function(msg)
 					}
 				}
 			}
+			if ((abilities = getAbilities(character)))
+			{
+				if (!(ability = getAbility(abilities, "End Turn")))
+				{
+					ability = createAbility(character, "End Turn");
+					ability.set("action", "!endTurn");
+				}
+			}
+			sendChat(msg.who, "/w " + msg.who + " finished with initial setup.");
 		}
 	}
 });

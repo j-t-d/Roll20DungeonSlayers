@@ -1,3 +1,6 @@
+var gmPlayerId = "-IyBQkJEl_kfk1rgy11p";
+
+
 on("chat:message", function(msg) 
 {
     if(msg.type == "api")  
@@ -29,28 +32,58 @@ on("chat:message", function(msg)
         }
         else if (msg.content.indexOf("!startCombat") === 0)
         {
-            var turnOrder = [];
 
-            _.each(findObjs(
-                {
-                    _subtype: "token", 
-                    _type: "graphic", 
-                    _pageid: Campaign().get("playerpageid"),
-                    layer: "objects"
-                }), function(token)
-                {
-                    // check if dead
-                    var isDead = token.get("status_dead");
-                    if (!isDead)
+            if (msg.playerid == gmPlayerId)
+            {
+                var turnOrder = [];
+
+                _.each(findObjs(
                     {
-                        var initiative = getInitiative(token);
-                        if (initiative)
-                            turnOrder.push({id: token.get("_id"), pr: initiative});                            
+                        _subtype: "token", 
+                        _type: "graphic", 
+                        _pageid: Campaign().get("playerpageid"),
+                        layer: "objects"
+                    }), function(token)
+                    {
+                        // check if dead
+                        var isDead = token.get("status_dead");
+                        if (!isDead)
+                        {
+                            var initiative = getInitiative(token);
+                            if (initiative)
+                                turnOrder.push({id: token.get("_id"), pr: initiative});                            
+                        }
+                    }
+                );
+                sendChat(msg.who, "/w " + msg.who + " initiatives calculated!");
+                setInitiative(turnOrder);            
+            }
+            else
+                sendChat(msg.who, "/w " + msg.who + " only the GM can use !startCombat");
+        }
+        else if (msg.content.indexOf("!endTurn") === 0)
+        {
+            var currentTurnOrder = JSON.parse(Campaign().get("turnorder"));  
+            var currentTurn = currentTurnOrder[0];
+            if (currentTurn)
+            {
+                var token = getObj("graphic", currentTurn.id);
+                if (token)
+                {
+                    var character = getObj("character", token.get("_represents"));
+                    if (character)
+                    {
+                        var controllers = character.get("controlledby");
+                        if (controllers.indexOf(msg.playerid) != -1)
+                        {
+                            currentTurnOrder.splice(0, 1);
+                            currentTurnOrder.push(currentTurn);
+                            Campaign().set("turnorder", JSON.stringify(currentTurnOrder)); 
+                            sendChat(msg.who, "I have completed my turn."); 
+                        }
                     }
                 }
-            );
-            sendChat(msg.who, "/w " + msg.who + " initiatives calculated!");
-            setInitiative(turnOrder);            
+            }
         }
     }
 });
