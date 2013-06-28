@@ -332,8 +332,6 @@ function rollFormat(who, msg, ctnData, ctn, rollData)
 
 on("chat:message", function(msg) 
 {
-	var debug = true;
-	
 	if (msg.type == "api" && msg.content.indexOf("!setup") !== -1)
 	{
 		var character = getCharacter(msg.who);
@@ -363,5 +361,27 @@ on("chat:message", function(msg)
 				}
 			}
 		}
+	}
+});
+
+on("chat:message", function(msg) 
+{
+	if (msg.type == "api" && msg.content.indexOf("!help") !== -1)
+	{
+		var charName = msg.who.split(" ")[0];
+
+		sendChat("HelpBot", "/w " +  charName + " Commands available to you...");
+		sendChat("HelpBot", "/w " +  charName + " !setup (Add all required attributes to your char sheet)");
+		sendChat("HelpBot", "/w " +  charName + " !def (Roll a defense)");
+		sendChat("HelpBot", "/w " +  charName + " !melee (Roll a melee attack)");
+		sendChat("HelpBot", "/w " +  charName + " !ranged (Roll a ranged attack)");
+		sendChat("HelpBot", "/w " +  charName + " !spell (Roll a non-targeted spell)");
+		sendChat("HelpBot", "/w " +  charName + " !tspell (Roll a targeted spell)");
+		sendChat("HelpBot", "/w " +  charName + " !chk skillname (Roll a skillcheck for a skill)");
+		sendChat("HelpBot", "/w " +  charName + " !chk help (List all skills !chk can roll for you)");
+		sendChat("HelpBot", "/w " +  charName + " !brew (Roll for potion making)");
+		sendChat("HelpBot", "/w " +  charName + " !scribe (Roll for scroll writing)");
+		sendChat("HelpBot", "/w " +  charName + " !craftmagic (Roll for mage portion of item creation)");
+		sendChat("HelpBot", "/w " +  charName + " !craftitem (Roll for artisan portion of item creation");
 	}
 });
