@@ -6,7 +6,7 @@ on("chat:message", function(msg)
 	{
 		var character = null;
 		var checkValue = 0;
-		var summation = "";
+		var summation = [];
 		var message = "";
 		var attributes = null;
 		var BOD = null;
@@ -28,7 +28,7 @@ on("chat:message", function(msg)
 			if (character)
 			{
 				checkValue = 0;
-				summation = "";
+				summation = [];
 				message = msg.content.replace("!def", "").toLowerCase();
 				attributes = getAttributes(character);
 
@@ -38,12 +38,14 @@ on("chat:message", function(msg)
 				var ritualofscars = getAttributeValue(attributes, "Ritual of Scars");
 
 				checkValue = BOD + CO + AV;
-				summation = "BOD(" + BOD + ") + CO(" + CO + ") + AV(" + AV + ")";
+				summation.push(["BOD", BOD, "+"]);
+				summation.push(["CO", CO, "+"]);
+				summation.push(["AV", AV, "+"]);
 
 				if (ritualofscars)
 				{
 					checkValue += (ritualofscars * 2);
-					summation += " + Ritual of Scars(" + (ritualofscars * 2) + ")";
+					summation.push(["Ritual of Scars", (ritualofscars * 2), "+"]);
 				}
 
 				// Test to see if DEF exists, if not, create it.
@@ -63,15 +65,16 @@ on("chat:message", function(msg)
 					if (bonus)
 					{
 						checkValue += bonus;
-						summation += " + (" + bonus + ")";
+						summation.push(["", Math.abs(bonus), (bonus < 0 ? "-" : "+")]);
 						message = "";
 					}
 				}
 
 				rollResults = roll(checkValue);
-				output = rollFormat(msg.who, checkValue, rollResults);
+				output = ctnFormat(summation);
+				output = rollFormat(msg.who, "I defend", output, checkValue, rollResults);
 
-				sendChat(msg.who, "/em attempts to defend against an attack ... Check(" + checkValue + ")[" + summation + "] results in " + output + ", it's a " + (rollResults.total > 0 ? "SUCCESS" : (rollResults.dice[0] == 20 ? "***FUMBLE***" : "FAILURE")) + (rollResults.total > 0 ? (" For " + (rollResults.total + rollResults.slayingTotal) + " less damage!") : ""));
+				sendChat(msg.who, "/direct " + output);
 			}
 			else
 				sendChat(msg.who, "/em tried to defend but they aren't even a character!");
@@ -85,7 +88,7 @@ on("chat:message", function(msg)
 			{
 				rollValue = randomInteger(20);
 				checkValue = 0;
-				summation = "";
+				summation = [];
 				message = msg.content.replace("!melee", "").toLowerCase();
 				attributes = getAttributes(character);
 
@@ -95,12 +98,14 @@ on("chat:message", function(msg)
 				var closecombat = getAttributeValue(attributes, "Close Combat");
 
 				checkValue = BOD + ST + WB;
-				summation = "BOD(" + BOD + ") + ST(" + ST + ") + WB(" + WB + ")";
+				summation.push(["BOD", BOD, "+"]);
+				summation.push(["ST", ST, "+"]);
+				summation.push(["WB", WB, "+"]);
 
 				if (closecombat)
 				{
 					checkValue += closecombat;
-					summation += " + Close Combat(" + closecombat + ")";
+					summation.push(["Close Combat", closecombat, "+"]);
 				}
 
 				// Test to see if DEF exists, if not, create it.
@@ -120,15 +125,16 @@ on("chat:message", function(msg)
 					if (bonus)
 					{
 						checkValue += bonus;
-						summation += " + (" + bonus + ")";
+						summation.push(["", Math.abs(bonus), (bonus < 0 ? "-" : "+")]);
 						message = "";
 					}
 				}
 
 				rollResults = roll(checkValue);
-				output = rollFormat(msg.who, checkValue, rollResults);
+				output = ctnFormat(summation);
+				output = rollFormat(msg.who, "I do a melee attack", output, checkValue, rollResults);
 
-				sendChat(msg.who, "/em tries to do a melee attack ... Check(" + checkValue + ")[" + summation + "] results in " + output + ", it's a " + (rollResults.total > 0 ? "SUCCESS" : (rollResults.dice[0] == 20 ? "***FUMBLE***" : "FAILURE")) + (rollResults.total > 0 ? (" For " + (rollResults.total + rollResults.slayingTotal) + " damage!") : ""));
+				sendChat(msg.who, "/direct " + output);
 			}
 			else
 				sendChat(msg.who, "/em tried to attack but they aren't even a character!");
@@ -141,7 +147,7 @@ on("chat:message", function(msg)
 			if (character)
 			{
 				checkValue = 0;
-				summation = "";
+				summation = [];
 				message = msg.content.replace("!ranged", "").toLowerCase();
 				attributes = getAttributes(character);
 
@@ -151,12 +157,14 @@ on("chat:message", function(msg)
 				marksman = getAttributeValue(attributes, "Marksman");
 
 				checkValue = MOB + DX + WB;
-				summation = "MOB(" + MOB + ") + DX(" + DX + ") + WB(" + WB + ")";
+				summation.push(["MOB", MOB, "+"]);
+				summation.push(["DX", DX, "+"]);
+				summation.push(["WB", WB, "+"]);
 
 				if (marksman)
 				{
 					checkValue += marksman;
-					summation += " + Marksman(" + marksman + ")";
+					summation.push(["Marksman", marksman, "+"]);
 				}
 
 				// Test to see if RAT exists, if not, create it.
@@ -176,15 +184,16 @@ on("chat:message", function(msg)
 					if (bonus)
 					{
 						checkValue += bonus;
-						summation += " + (" + bonus + ")";
+						summation.push(["", Math.abs(bonus), (bonus < 0 ? "-" : "+")]);
 						message = "";
 					}
 				}
 
 				rollResults = roll(checkValue);
-				output = rollFormat(msg.who, checkValue, rollResults);
+				output = ctnFormat(summation);
+				output = rollFormat(msg.who, "I do a ranged attack", output, checkValue, rollResults);
 
-				sendChat(msg.who, "/em tries to do a ranged attack ... Check(" + checkValue + ")[" + summation + "] results in " + output + ", it's a " + (rollResults.total > 0 ? "SUCCESS" : (rollResults.dice[0] == 20 ? "***FUMBLE***" : "FAILURE")) + (rollResults.total > 0 ? (" For " + (rollResults.total + rollResults.slayingTotal) + " damage!") : ""));
+				sendChat(msg.who, "/direct " + output);
 			}
 			else
 				sendChat(msg.who, "/em tried to attack but they aren't even a character!");
@@ -197,7 +206,7 @@ on("chat:message", function(msg)
 			if (character)
 			{
 				checkValue = 0;
-				summation = "";
+				summation = [];
 				message = msg.content.replace("!spell", "").toLowerCase();
 				attributes = getAttributes(character);
 
@@ -207,12 +216,14 @@ on("chat:message", function(msg)
 				var SPCMOD = getAttributeValue(attributes, "SPC%");
 
 				checkValue = MND + AU - AV;
-				summation = "MND(" + MND + ") + AU(" + AU + ") - AV(" + AV + ")";
+				summation.push(["MND", MND, "+"]);
+				summation.push(["AU", AU, "+"]);
+				summation.push(["AV", AV, "-"]);
 
 				if (SPCMOD)
 				{
 					checkValue += SPCMOD;
-					summation += " + Bonus(" + SPCMOD + ")";
+					summation.push(["Bonus", SPCMOD, "+"]);
 				}
 				
 				// Test to see if RAT exists, if not, create it.
@@ -232,15 +243,16 @@ on("chat:message", function(msg)
 					if (bonus)
 					{
 						checkValue += bonus;
-						summation += " + (" + bonus + ")";
+						summation.push(["", Math.abs(bonus), (bonus < 0 ? "-" : "+")]);
 						message = "";
 					}
 				}
 
 				rollResults = roll(checkValue);
-				output = rollFormat(msg.who, checkValue, rollResults);
+				output = ctnFormat(summation);
+				output = rollFormat(msg.who, "I cast a spell", output, checkValue, rollResults);
 
-				sendChat(msg.who, "/em tries to cast a spell ... Check(" + checkValue + ")[" + summation + "] results in " + output + ", it's a " + (rollResults.total > 0 ? "SUCCESS" : (rollResults.dice[0] == 20 ? "***FUMBLE***" : "FAILURE")) + (rollResults.total > 0 ? (" For " + (rollResults.total + rollResults.slayingTotal) + " damage!") : ""));
+				sendChat(msg.who, "/direct " + output);
 			}
 			else
 				sendChat(msg.who, "/em tried to cast a spell but they aren't even a character!");
@@ -267,20 +279,17 @@ on("chat:message", function(msg)
 				summation.push(["MND", MND, "+"]);
 				summation.push(["DX", DX, "+"]);
 				summation.push(["AV", AV, "-"]);
-				//summation = "MND(" + MND + ") + DX(" + DX + ") - AV(" + AV + ")";
 
 				if (TSCMOD)
 				{
 					checkValue += TSCMOD;
 					summation.push(["Bonus", TSCMOD, "+"]);
-					//summation += " + Bonus(" + TSCMOD + ")";
 				}
 				
 				if (marksman)
 				{
 					checkValue += marksman;
 					summation.push(["Marksman", marksman, "+"]);
-					//summation += " + Marksman(" + marksman + ")";
 				}
 
 				// Test to see if RAT exists, if not, create it.
@@ -300,8 +309,7 @@ on("chat:message", function(msg)
 					if (bonus)
 					{
 						checkValue += bonus;
-						summation.push(["", bonus, "+"]);
-						//summation += " + (" + bonus + ")";
+						summation.push(["", Math.abs(bonus), (bonus < 0 ? "-" : "+")]);
 						message = "";
 					}
 				}
@@ -311,8 +319,6 @@ on("chat:message", function(msg)
 				output = rollFormat(msg.who, "I cast a targeted spell", output, checkValue, rollResults);
 
 				sendChat(msg.who, "/direct " + output);
-				//sendChat(msg.who, "/em tries to cast a spell on a target ... Check(" + checkValue + ")[" + summation + "] results in " + output + ", it's a " + (rollResults.total > 0 ? "SUCCESS" : (rollResults.dice[0] == 20 ? "***FUMBLE***" : "FAILURE")) + (rollResults.total > 0 ? (" For " + (rollResults.total + rollResults.slayingTotal) + " damage!") : ""));
-				//sendChat(msg.who, "/em tries to cast a spell on a target and " + (rollResults.total > 0 ? "SUCCEEDS" : (rollResults.dice[0] == 20 ? "FUMBLES" : "FAILS")) + (rollResults.total > 0 ? (" for " + (rollResults.total + rollResults.slayingTotal) + " damage!") : ""));
 			}
 			else
 				sendChat(msg.who, "/em tried to cast a spell but they aren't even a character!");

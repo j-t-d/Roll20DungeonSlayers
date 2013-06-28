@@ -151,7 +151,7 @@ function tallyLeftovers(msg)
 				bonus += parseInt(tokens[i], 10);
 		}
 
-		if (bonus > 0)
+		if (bonus !== 0)
 			rtn = bonus;
 	}
 
@@ -282,8 +282,8 @@ function rollFormat(who, msg, ctnData, ctn, rollData)
 		var i = 0;
 		var j = 0;
 
-		rtn = "<span>" + msg + " and " + (rollData.total > 0 ? "deal" : (rollData.dice[0] == 20 ? "<span style='font-weight: bold';>FUMBLE</span>" : "<span style='font-weight: bold';>MISS</span>")) + (rollData.total > 0 ? (" <span style='font-weight: bold';>" + (rollData.total + rollData.slayingTotal) + "</span> damage!") : "") + "</span>";
-		rtn += ctnData;
+		
+		rtn = ctnData;
 		rtn += "<table style='margin=top: 7px; border-collapse: separate; border-spacing: 2px; font-weight: bold;'><tr>";
 
 		for(i = 0; i < rollData.checks.length; i++)
@@ -324,6 +324,7 @@ function rollFormat(who, msg, ctnData, ctn, rollData)
 
 		}
 		rtn += "</tr></table>";
+		rtn += "<span>" + msg + " and " + (rollData.total > 0 ? "<span style='font-weight: bold';>SUCCEED</span>" : (rollData.dice[0] == 20 ? "<span style='font-weight: bold';>FUMBLE</span>" : "<span style='font-weight: bold';>MISS</span>")) + (rollData.total > 0 ? (" for <span style='font-weight: bold';>" + (rollData.total + rollData.slayingTotal) + "</span>!") : "") + "</span>";
 	}
 
 	return rtn;
