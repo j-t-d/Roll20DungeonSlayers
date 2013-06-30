@@ -16,25 +16,24 @@ on("change:graphic", function(obj)
             return index;
         }
 
+        var turnOrder = JSON.parse(Campaign().get("turnorder"));                        
         var currentlyDead = obj.get("status_dead");
         if (currentlyDead && !isDead)
         {
-            var turnOrder = JSON.parse(Campaign().get("turnorder"));                        
             if (turnOrderIndex(turnOrder) == -1)
             {
                 turnOrder.push({id: obj.get("_id"), pr: getInitiative(obj)});
-                setInitiative(turnOrder);
+                Campaign().set("turnorder", JSON.stringify(turnOrder)); 
             }
             obj.set({status_dead: false});
         }
         else if (!currentlyDead && isDead)
         {
-            var turnOrder = JSON.parse(Campaign().get("turnorder"));                        
             var index = turnOrderIndex(turnOrder);
             if (index != -1)
             {
                 turnOrder.splice([index], 1);
-                setInitiative(turnOrder);
+                Campaign().set("turnorder", JSON.stringify(turnOrder)); 
             }
             obj.set({status_dead: true});
         }
