@@ -155,8 +155,8 @@ on("chat:message", function(msg)
 
 				if (endurance)
 				{
-					checkValue += (parseInt(endurance, 10) * 2);
-					summation += " + Endurance(" + (parseInt(endurance, 10) * 2) + ")";
+					checkValue += parseInt(endurance, 10);
+					summation += " + Endurance(" + parseInt(endurance, 10) + ")";
 				}
 
 				message = message.replace("defy poison", "");
