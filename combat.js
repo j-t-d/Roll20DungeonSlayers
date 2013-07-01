@@ -36,6 +36,7 @@ on("chat:message", function(msg)
 				var CO = getAttributeValue(attributes, "CO");
 				AV = getAttributeValue(attributes, "AV");
 				var ritualofscars = getAttributeValue(attributes, "Ritual of Scars");
+				var tough = getAttributeValue(attributes, "Tough");
 
 				checkValue = BOD + CO + AV;
 				summation.push(["BOD", BOD, "+"]);
@@ -46,6 +47,12 @@ on("chat:message", function(msg)
 				{
 					checkValue += (ritualofscars * 2);
 					summation.push(["Ritual of Scars", (ritualofscars * 2), "+"]);
+				}
+
+				if (tough)
+				{
+					checkValue += 1;
+					summation.push(["Tough", 1, "+"]);
 				}
 
 				// Test to see if DEF exists, if not, create it.

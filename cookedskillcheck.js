@@ -38,9 +38,9 @@ on("chat:message", function(msg)
 			var message = msg.content.replace("!chk ", "").toLowerCase();
 			var character = _.first(characters);
 			var attributes = findObjs({
-			      _type: "attribute",
-			      _characterid: character.get('_id')
-			    });
+				_type: "attribute",
+				_characterid: character.get('_id')
+				});
 
 			var BOD = parseInt(getValue(attributes, "BOD"), 10);
 			var ST = parseInt(getValue(attributes, "ST"), 10);
@@ -92,7 +92,7 @@ on("chat:message", function(msg)
 					checkValue += (parseInt(acrobat, 10) * 2);
 					summation += " + Acrobat(" + (parseInt(acrobat, 10) * 2) + ")";
 				}
-				if (appraise)
+				if (climber)
 				{
 					checkValue += (parseInt(climber, 10) * 2);
 					summation += " + Master Climber(" + (parseInt(climber, 10) * 2) + ")";
@@ -182,7 +182,7 @@ on("chat:message", function(msg)
 			else if (message.indexOf("feat of strength") !== -1)
 			{
 				summation = "BOD(" + BOD + ") + ST(" + ST + ")";
-				output = "is trying to defy a poison";
+				output = "is trying a feat of strength";
 				checkValue = BOD + ST;
 				message = message.replace("feat of strength", "");
 			}
@@ -310,7 +310,7 @@ on("chat:message", function(msg)
 			else if (message.indexOf("intimidate") !== -1)
 			{
 				summation = "BOD(" + BOD + ") + AU(" + AU + ")";
-				output = "is trying to intimate someone";
+				output = "is trying to intimidate someone";
 				checkValue = BOD + AU;
 				message = message.replace("intimidate", "");
 			}
@@ -482,7 +482,7 @@ on("chat:message", function(msg)
 					checkValue = MND + IN;
 				}
 
-				output = "is trying to apply some knowledge";
+				output = "is trying to search for something";
 				
 				if (thievery)
 				{
