@@ -30,7 +30,7 @@ function createAttribute(character, attributename)
 	if (character && attributename)
 	{
 		rtn = createObj("attribute", {
-			name: attributename,
+			name: attributename.toUpperCase(),
 			characterid: character.get("_id")
 		});
 	}
@@ -38,13 +38,13 @@ function createAttribute(character, attributename)
 	return rtn;
 }
 
-function getAttribute(attributes, attribute)
+function getAttribute(attributes, attributename)
 {
 	var rtn = null;
 
 	for (var i = 0; i < attributes.length; i++)
 	{
-		if (attributes[i].get("name") == attribute)
+		if (attributes[i].get("name").toUpperCase() == attributename.toUpperCase())
 		{
 			rtn = attributes[i];
 			break;
@@ -54,13 +54,13 @@ function getAttribute(attributes, attribute)
 	return rtn;
 }
 
-function getAttributeValue(attributes, attribute)
+function getAttributeValue(attributes, attributename)
 {
 	var rtn = null;
 
 	for (var i = 0; i < attributes.length; i++)
 	{
-		if (attributes[i].get("name") == attribute)
+		if (attributes[i].get("name").toUpperCase() == attributename.toUpperCase())
 		{
 			rtn = parseInt(attributes[i].get("current"), 10);    
 			break;
@@ -87,25 +87,25 @@ function getAttributes(character)
 	return rtn;
 }
 
-function createAbility(character, abilityName)
+function createAbility(character, abilityname)
 {
 	var rtn = null;
-	if (character && abilityName)
+	if (character && abilityname)
 	{
 		rtn = createObj("ability", {
-			name: abilityName,
+			name: abilityname,
 			characterid: character.get("id")
 		});
 	}
 	return rtn;
 }
 
-function getAbility(abilities, ability)
+function getAbility(abilities, abilityname)
 {
 	var rtn = null;
 	for (var i = 0; i < abilities.length; i++)
 	{
-		if (abilities[i].get("name") == ability)
+		if (abilities[i].get("name").toUpperCase() == abilityname.toUpperCase())
 		{
 			rtn = abilities[i];
 			break;

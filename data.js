@@ -1,3 +1,7 @@
+var whatev = whatev || {};
+
+whatev.chars = {};
+
 stats = {
 	"bod": {
 		base: null,
@@ -169,7 +173,7 @@ stats = {
 		}
 	},
 	"av": {
-		base: 0,
+		base: null,
 		affects: {
 			"def": 1,
 			"spc": -1,
@@ -177,32 +181,32 @@ stats = {
 		}
 	},
 	"wb": {
-		base: 0,
+		base: null,
 		affects: {
 			"mat": 1,
 			"rat": 1
 		}
 	},
 	"spc%": {
-		base: 0,
+		base: null,
 		affects: {
 			"spc": 1
 		}
 	},
 	"tsc%": {
-		base: 0,
+		base: null,
 		affects: {
 			"tsc": 1
 		}
 	},
 	"ini%": {
-		base: 0,
+		base: null,
 		affects: {
 			"initiative": 1
 		}
 	},
 	"mr%": {
-		base: 0,
+		base: null,
 		affects: {
 			"mr": 1
 		}
@@ -445,6 +449,7 @@ racials = {
 			"sneak": -4,
 			"swim": -4,
 			"trophy": -4,
+			"rat": -4
 		}
 	},
 	"unkempt": {
@@ -568,3 +573,526 @@ skills = {
 		output: "is trying to work a mechanism"
 	}
 };
+
+function printSkills(characterName)
+{
+	var character = getCharacter(characterName);
+	var key = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		if (whatev.chars[id].skills)
+		{
+			for (key in whatev.chars[id].skills)
+			{	
+				if (!whatev.chars[id].skills.hasOwnProperty(key))
+					continue;
+
+				log(key + " current(" + whatev.chars[id].skills[key].current + ") base(" + whatev.chars[id].skills[key].base + ") min(" + whatev.chars[id].skills[key].min + ") " + whatev.chars[id].skills[key].output);
+			}
+		}
+	}
+}
+
+function printStats(characterName)
+{
+	var character = getCharacter(characterName);
+	var key = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		if (whatev.chars[id].stats)
+		{
+			for (key in whatev.chars[id].stats)
+			{	
+				if (!whatev.chars[id].stats.hasOwnProperty(key))
+					continue;
+
+				log(key + " (" + JSON.stringify(whatev.chars[id].stats[key]) + ")");
+			}
+		}
+	}
+}
+
+function printRacials(characterName)
+{
+	var character = getCharacter(characterName);
+	var key = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		if (whatev.chars[id].racials)
+		{
+			for (key in whatev.chars[id].racials)
+			{	
+				if (!whatev.chars[id].racials.hasOwnProperty(key))
+					continue;
+
+				log(key + " (" + JSON.stringify(whatev.chars[id].racials[key]) + ")");
+			}
+		}
+	}
+}
+
+function printTalents(characterName)
+{
+	var character = getCharacter(characterName);
+	var key = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		if (whatev.chars[id].talents)
+		{
+			for (key in whatev.chars[id].talents)
+			{	
+				if (!whatev.chars[id].talents.hasOwnProperty(key))
+					continue;
+
+				log(key + " (" + JSON.stringify(whatev.chars[id].talents[key]) + ")");
+			}
+		}
+	}
+}
+
+function printSpells(characterName)
+{
+	var character = getCharacter(characterName);
+	var key = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		if (whatev.chars[id].spells)
+		{
+			for (key in whatev.chars[id].spells)
+			{	
+				if (!whatev.chars[id].spells.hasOwnProperty(key))
+					continue;
+
+				log(key + " base(" + whatev.chars[id].spells[key].base + ") current(" + whatev.chars[id].spells[key].current + ")");
+			}
+		}
+	}
+}
+
+function loadSkills(characterName)
+{
+	var character = getCharacter(characterName);
+	var key = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		whatev.chars[id] = {};
+		whatev.chars[id].skills = {};
+
+		if (skills)
+		{
+			for (key in skills)
+			{
+				if (!skills.hasOwnProperty(key))
+					continue;
+
+				whatev.chars[id].skills[key] = {output: skills[key].output, current: (skills[key].base ? skills[key].base : 0), affectedBy: {}, base: (skills[key].base ? skills[key].base : 0), min: (skills[key].minimum ? skills[key].minimum : 0)};
+			}
+		}
+	}
+}
+
+function prepStats(characterName)
+{
+	var character = getCharacter(characterName);
+	var attributes = null;
+	var key = null;
+	var stat = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		if (stats)
+		{
+			attributes = getAttributes(character);
+
+			for (key in stats)
+			{
+				if (!stats.hasOwnProperty(key))
+					continue;
+
+				stat = getAttribute(attributes, key);
+
+				if (stat === null)
+				{
+					createAttribute(character, key);
+				}
+			}
+		}
+	}
+}
+
+function loadStats(characterName)
+{
+	var character = getCharacter(characterName);
+	var attributes = null;
+	var key = null;
+	var stat = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		whatev.chars[id].stats = {};
+
+		if (stats)
+		{
+			attributes = getAttributes(character);
+
+			for (key in stats)
+			{
+				if (!stats.hasOwnProperty(key))
+					continue;
+
+				whatev.chars[id].stats[key] = {};
+				whatev.chars[id].stats[key].affects = stats[key].affects;
+
+				if (stats[key].base === null)
+				{
+					stat = getAttributeValue(attributes, key.toUpperCase());
+					whatev.chars[id].stats[key].base = stat;
+				}
+				else
+					whatev.chars[id].stats[key].base = stats[key].base;
+			}
+		}
+	}
+}
+
+function loadRacials(characterName)
+{
+	var character = getCharacter(characterName);
+	var attributes = null;
+	var key = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		whatev.chars[id].racials = {};
+		attributes = getAttributes(character);
+
+		if (racials)
+		{
+			for (key in racials)
+			{
+				if (!racials.hasOwnProperty(key))
+					continue;
+
+				if (getAttribute(attributes, key.toUpperCase()))
+				{
+					whatev.chars[id].racials[key] = {};
+					whatev.chars[id].racials[key] = racials[key];
+					whatev.chars[id].racials[key].base = getAttributeValue(attributes, key.toUpperCase());
+				}
+			}
+		}
+	}
+}
+
+function loadTalents(characterName)
+{
+	var character = getCharacter(characterName);
+	var attributes = null;
+	var key = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		whatev.chars[id].talents = {};
+		attributes = getAttributes(character);
+
+		if (talents)
+		{
+			for (key in talents)
+			{
+				if (!talents.hasOwnProperty(key))
+					continue;
+
+				if (getAttribute(attributes, key.toUpperCase()))
+				{
+					whatev.chars[id].talents[key] = {};
+					whatev.chars[id].talents[key] = talents[key];
+					whatev.chars[id].talents[key].base = getAttributeValue(attributes, key.toUpperCase());
+				}
+			}
+		}
+	}
+}
+
+function loadSpells(characterName)
+{
+	var character = getCharacter(characterName);
+	var key = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		whatev.chars[id].spells = {};
+
+		if (spells)
+		{
+			for (key in spells)
+			{
+				if (!spells.hasOwnProperty(key))
+					continue;
+
+				whatev.chars[id].spells[key] = {base: spells[key].sm};
+			}
+		}
+	}
+}
+
+function processStats(characterName)
+{
+	var character = getCharacter(characterName);
+	var key = null;
+	var target = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		if (whatev.chars[id].stats)
+		{
+			for (key in whatev.chars[id].stats)
+			{	
+				if (!whatev.chars[id].stats.hasOwnProperty(key))
+					continue;
+
+				// Step through affects, apply to targets
+				for (target in whatev.chars[id].stats[key].affects)
+				{
+					// Test for stat, then skill
+					if (whatev.chars[id].stats.hasOwnProperty(target))
+					{
+						// if target has a current value, continue, otherwise establish a current for target with its base
+						if (!whatev.chars[id].stats[target].hasOwnProperty("current"))
+							whatev.chars[id].stats[target].current = whatev.chars[id].stats[target].base;
+
+						// add to current if it is a number, otherwise process an operation
+						if (isNumber(whatev.chars[id].stats[key].affects[target]))
+							whatev.chars[id].stats[target].current += (whatev.chars[id].stats[key].base * whatev.chars[id].stats[key].affects[target]);
+						else
+						{
+							if (whatev.chars[id].stats[key].affects[target].hasOwnProperty("op"))
+							{
+								if (whatev.chars[id].stats[key].affects[target].op == "/")
+								{
+									whatev.chars[id].stats[target].current += (whatev.chars[id].stats[key].base / whatev.chars[id].stats[key].affects[target].arg);
+								}
+							}
+						}
+					}
+					else if (whatev.chars[id].skills.hasOwnProperty(target))
+					{
+
+					}
+
+				}
+			}
+		}
+	}
+}
+
+function processLoop(id, key, target, input, check)
+{
+	if (whatev.chars[id][check].hasOwnProperty(target))
+	{
+		// if target has a current value, continue, otherwise establish a current for target with its base
+		if (!whatev.chars[id][check][target].hasOwnProperty("current"))
+			whatev.chars[id][check][target].current = whatev.chars[id][check][target].base;
+
+		// add to current if it is a number, otherwise process an operation
+		if (isNumber(whatev.chars[id][input][key].affects[target]))
+			whatev.chars[id][check][target].current += (whatev.chars[id][input][key].base * whatev.chars[id][input][key].affects[target]);
+		else
+		{
+			if (whatev.chars[id][input][key].affects[target].hasOwnProperty("op"))
+			{
+				if (whatev.chars[id][input][key].affects[target].op == "/")
+				{
+					whatev.chars[id][check][target].current += (whatev.chars[id][input][key].base / whatev.chars[id][input][key].affects[target].arg);
+				}
+			}
+		}
+	}
+}
+
+function processData(characterName, input)
+{
+	var character = getCharacter(characterName);
+	var key = null;
+	var target = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		if (whatev.chars[id][input])
+		{
+			for (key in whatev.chars[id][input])
+			{	
+				if (!whatev.chars[id][input].hasOwnProperty(key))
+					continue;
+
+				// Step through affects, apply to targets
+				for (target in whatev.chars[id][input][key].affects)
+				{
+					// Test for stat, then skill, then spells
+					processLoop(id, key, target, input, "stats");
+					processLoop(id, key, target, input, "skills");
+					processLoop(id, key, target, input, "spells");
+				}
+			}
+		}
+	}
+}
+
+function processDataOrig(characterName, input)
+{
+	var character = getCharacter(characterName);
+	var key = null;
+	var target = null;
+
+	if (character)
+	{
+		var id = character.get("_id");
+
+		if (whatev.chars[id][input])
+		{
+			for (key in whatev.chars[id][input])
+			{	
+				if (!whatev.chars[id][input].hasOwnProperty(key))
+					continue;
+
+				// Step through affects, apply to targets
+				for (target in whatev.chars[id][input][key].affects)
+				{
+					// Test for stat, then skill, then spells
+					processLoop(id, key, target, input, "stats");
+					processLoop(id, key, target, input, "skills");
+					processLoop(id, key, target, input, "spells");
+
+					if (whatev.chars[id].stats.hasOwnProperty(target))
+					{
+						// if target has a current value, continue, otherwise establish a current for target with its base
+						if (!whatev.chars[id].stats[target].hasOwnProperty("current"))
+							whatev.chars[id].stats[target].current = whatev.chars[id].stats[target].base;
+
+						// add to current if it is a number, otherwise process an operation
+						if (isNumber(whatev.chars[id][input][key].affects[target]))
+							whatev.chars[id].stats[target].current += (whatev.chars[id][input][key].base * whatev.chars[id][input][key].affects[target]);
+						else
+						{
+							if (whatev.chars[id][input][key].affects[target].hasOwnProperty("op"))
+							{
+								if (whatev.chars[id][input][key].affects[target].op == "/")
+								{
+									whatev.chars[id].stats[target].current += (whatev.chars[id][input][key].base / whatev.chars[id][input][key].affects[target].arg);
+								}
+							}
+						}
+					}
+					else if (whatev.chars[id].skills.hasOwnProperty(target))
+					{
+						// if target has a current value, continue, otherwise establish a current for target with its base
+						if (!whatev.chars[id].skills[target].hasOwnProperty("current"))
+							whatev.chars[id].skills[target].current = whatev.chars[id].skills[target].base;
+
+						// add to current if it is a number, otherwise process an operation
+						if (isNumber(whatev.chars[id][input][key].affects[target]))
+							whatev.chars[id].skills[target].current += (whatev.chars[id][input][key].base * whatev.chars[id][input][key].affects[target]);
+						else
+						{
+							if (whatev.chars[id][input][key].affects[target].hasOwnProperty("op"))
+							{
+								if (whatev.chars[id][input][key].affects[target].op == "/")
+								{
+									whatev.chars[id].skills[target].current += (whatev.chars[id][input][key].base / whatev.chars[id][input][key].affects[target].arg);
+								}
+							}
+						}
+					}
+					else if (whatev.chars[id].spells.hasOwnProperty(target))
+					{
+						// if target has a current value, continue, otherwise establish a current for target with its base
+						if (!whatev.chars[id].spells[target].hasOwnProperty("current"))
+							whatev.chars[id].spells[target].current = whatev.chars[id].spells[target].base;
+
+						log(whatev.chars[id].spells[target]);
+						// add to current if it is a number, otherwise process an operation
+						if (isNumber(whatev.chars[id][input][key].affects[target]))
+							whatev.chars[id].spells[target].current += (whatev.chars[id][input][key].base * whatev.chars[id][input][key].affects[target]);
+						else
+						{
+							if (whatev.chars[id][input][key].affects[target].hasOwnProperty("op"))
+							{
+								if (whatev.chars[id][input][key].affects[target].op == "/")
+								{
+									whatev.chars[id].spells[target].current += (whatev.chars[id][input][key].base / whatev.chars[id][input][key].affects[target].arg);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+on("ready", function(msg)
+{
+	var characterName = "Street.Legal";
+
+
+	log("** Before ****************************");
+	loadSkills(characterName);
+	prepStats(characterName);
+	loadStats(characterName);
+	loadRacials(characterName);
+	loadTalents(characterName);	
+	loadSpells(characterName);
+
+	if (true)
+	{
+		printSkills(characterName);
+		printStats(characterName);
+		printRacials(characterName);
+		printTalents(characterName);
+		printSpells(characterName);
+	}
+
+	processData(characterName, "talents");
+	processData(characterName, "racials");
+	processData(characterName, "stats");
+
+	log("** After ****************************");
+	printStats(characterName);
+	log("******************************");
+	printSkills(characterName);
+	log("******************************");
+	printSpells(characterName);
+
+
+});
