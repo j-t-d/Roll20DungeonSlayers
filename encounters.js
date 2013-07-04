@@ -1,6 +1,3 @@
-var gmPlayerId = "-IyBQkJEl_kfk1rgy11p";
-
-
 on("chat:message", function(msg) 
 {
     if(msg.type == "api")  
@@ -33,7 +30,7 @@ on("chat:message", function(msg)
         else if (msg.content.indexOf("!startCombat") === 0)
         {
 
-            if (msg.playerid == gmPlayerId)
+            if (gmCommandCheck(msg))
             {
                 var turnOrder = [];
 
@@ -58,8 +55,6 @@ on("chat:message", function(msg)
                 sendChat(msg.who, "/w " + msg.who + " initiatives calculated!");
                 setInitiative(turnOrder);            
             }
-            else
-                sendChat(msg.who, "/w " + msg.who + " only the GM can use !startCombat");
         }
         else if (msg.content.indexOf("!endTurn") === 0)
         {

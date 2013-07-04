@@ -1,6 +1,6 @@
-on("chat:message", function(msg)
-{		
-	var lootTable = {
+on("ready", function()
+{
+	state.treasureTable = {
 		"A":
 		[
 			"",
@@ -844,8 +844,10 @@ on("chat:message", function(msg)
 			"Mace"
 		]
 	};
+});
 
-
+on("chat:message", function(msg)
+{		
 	function sendOutput(text)
 	{
 		sendChat("Treasure", "/w " + msg.who + " " + text);
@@ -1373,7 +1375,7 @@ on("chat:message", function(msg)
 		var loot = null;
 		table = table.toUpperCase();
 		log("Table Lookup: " + table + "[" + index + "]");
-		var currentTable = lootTable[table];
+		var currentTable = state.treasureTable[table];
 		if (currentTable)
 		{
 			if (index >= currentTable.length)
