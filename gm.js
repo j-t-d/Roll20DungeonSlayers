@@ -38,9 +38,8 @@ function gmHandleCombatEnd(msg, args)
 function gmHandleTreasure(msg, args)
 {
 	var treasureString = args.join(" ");
-	var treasure = new Treasure(msg.who);
-	treasure.send("*********** " + treasureString + " ***********");
-	treasure.resolve(treasureString);
+	whatev.treasure.send(msg.who, "*********** " + treasureString + " ***********");
+	whatev.treasure.resolve(msg.who, treasureString);
 }
 
 function gmCommandCheck(msg)
