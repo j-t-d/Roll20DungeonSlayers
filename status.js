@@ -1,4 +1,4 @@
-on("change:graphic", function(obj) 
+on("change:graphic:bar1_value", function(obj) 
 {
     function setDeath(isDead)
     {

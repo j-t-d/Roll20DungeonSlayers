@@ -1,6 +1,7 @@
-on("ready", function()
+function Treasure(who)
 {
-	state.treasureTable = {
+	var treasureTable =
+	{
 		"A":
 		[
 			"",
@@ -843,16 +844,7 @@ on("ready", function()
 			"Mace",
 			"Mace"
 		]
-	};
-});
-
-on("chat:message", function(msg)
-{		
-	function sendOutput(text)
-	{
-		sendChat("Treasure", "/w " + msg.who + " " + text);
-
-	}
+	};			
 
 	function resolveSpellStaff()
 	{
@@ -865,7 +857,7 @@ on("chat:message", function(msg)
 
 	function resolvePotion()
 	{
-		sendChat(msg.who, "/roll 5D20", function(results)
+		sendChat(who, "/roll 5D20", function(results)
 		{
 			tableLookup("P", rollResult(results));
 		});
@@ -873,7 +865,7 @@ on("chat:message", function(msg)
 
 	function resolveElemental(outputFunc)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			var spell = null; 
@@ -893,7 +885,7 @@ on("chat:message", function(msg)
 
 	function resolveSpellTable(roll, table, outputFunc)
 	{
-		sendChat(msg.who, "/roll " + roll, function(results)
+		sendChat(who, "/roll " + roll, function(results)
 		{
 			var total = rollResult(results);
 			tableLookup(table, total, outputFunc);
@@ -902,7 +894,7 @@ on("chat:message", function(msg)
 
 	function resolveSpell(outputFunc)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			if (total <= 8)
@@ -927,8 +919,7 @@ on("chat:message", function(msg)
 
 	function resolveEffectTypeFreeAction(effectState)
 	{
-		log("Resolving Free Action");
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			var freeAction = getFromTable("EA", total);
@@ -942,7 +933,7 @@ on("chat:message", function(msg)
 
 	function resolveEffectTypeBonusModifier(effect, limit1, limit2, effectState)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var bonus = 0;
 			var total = rollResult(results);
@@ -959,8 +950,7 @@ on("chat:message", function(msg)
 
 	function resolveEffectTypeCheck(effectState)
 	{
-		log("Resolving Check");
-		sendChat(msg.who, "/roll 2D20", function(results)
+		sendChat(who, "/roll 2D20", function(results)
 		{
 			var total = rollResult(results);
 			var checkType = getFromTable("EB1", total);
@@ -971,7 +961,6 @@ on("chat:message", function(msg)
 
 	function resolveEffectTypeSpell(effectState)
 	{
-		log("Resolvoing spell");
 		function spellLookup(spell)
 		{
 			resolveEffectTypeBonusModifier(spell, 15, 19, effectState);
@@ -982,8 +971,7 @@ on("chat:message", function(msg)
 
 	function resolveEffectTypeSpellGroup(effectState)
 	{
-		log("Resolving Spell Group");
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			var spellGroup = getFromTable("EB2", total);
@@ -994,8 +982,7 @@ on("chat:message", function(msg)
 
 	function resolveEffectTypeCombatValue(effectState)
 	{
-		log("Resolving Combat Value");
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			var combatValue = getFromTable("EB3", total);
@@ -1006,8 +993,7 @@ on("chat:message", function(msg)
 
 	function resolveEffectTypeTrait(effectState)
 	{
-		log("Resolving trait");
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			var trait = getFromTable("EB4", total);
@@ -1018,8 +1004,7 @@ on("chat:message", function(msg)
 
 	function resolveEffectTypeAttribute(effectState)
 	{
-		log("Resolving attribute");
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			var attribute = getFromTable("EB5", total);
@@ -1030,8 +1015,7 @@ on("chat:message", function(msg)
 
 	function resolveEffectTypeBonus(effectState)
 	{
-		log("Resolving bonus");
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			if (total <= 9)
@@ -1051,7 +1035,7 @@ on("chat:message", function(msg)
 
 	function resolveEffectTalentModifier(talent, bonus, effectState)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);		
 			if (total <= 12)
@@ -1076,13 +1060,12 @@ on("chat:message", function(msg)
 
 	function resolveEffectTypeTalent(effectState)
 	{
-		sendChat(msg.who, "/roll 4D20", function(results)
+		sendChat(who, "/roll 4D20", function(results)
 		{
 			var total = rollResult(results);
 			var talent = getFromTable("ET1", total);
 			if (talent)
 			{
-				log("Resolving talent: " + talent);
 				resolveEffectTalentModifier(talent, 0, effectState);
 			}
 		});
@@ -1090,7 +1073,7 @@ on("chat:message", function(msg)
 
 	function resolveSpellEffectCharges(spell, effectState)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			effectState.effects.push(spell + " (" + total + " charges)");
@@ -1100,7 +1083,7 @@ on("chat:message", function(msg)
 
 	function resolveSpellEffectCooldown(spell, effectState, isAll)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			var rounds = 0;
@@ -1126,7 +1109,7 @@ on("chat:message", function(msg)
 
 	function resolveSpellEffectDaily(spell, effectState)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var daily = "";
 			var total = rollResult(results);
@@ -1147,8 +1130,7 @@ on("chat:message", function(msg)
 	{
 		function spellResult(spell)
 		{
-			log("Resolving spell effect: " + spell);			
-			sendChat(msg.who, "/roll D20", function(results)
+			sendChat(who, "/roll D20", function(results)
 			{
 				var total = rollResult(results);
 				if (total <= 12)
@@ -1173,10 +1155,9 @@ on("chat:message", function(msg)
 
 	function resolveEffectType(effectState)
 	{
-		log("Have " + effectState.effects.length + "/" + effectState.maxEffects + " (" + (effectState.effects.length < effectState.maxEffects) + ") effects so far");
 		if (effectState.effects.length < effectState.maxEffects)
 		{
-			sendChat(msg.who, "/roll D20", function(results)
+			sendChat(who, "/roll D20", function(results)
 			{
 				var total = rollResult(results);
 				if (total <= 5)
@@ -1206,7 +1187,7 @@ on("chat:message", function(msg)
 
 	function resolveOtherEffects(effectState)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			if (total <= 15)
@@ -1226,7 +1207,6 @@ on("chat:message", function(msg)
 
 			if (total != 20) // not a roll again
 			{
-				log("Have " + effectState.maxEffects + " effects to resolve");
 				effectState.effects = [];
 				resolveEffectType(effectState);
 			}
@@ -1236,13 +1216,12 @@ on("chat:message", function(msg)
 	// if bonus is not set (to 0) it'll assume it's a non wb/av item and not print or calculate it
 	function resolveEffectBonus(effectState)
 	{
-		log("Resolving effects for " + effectState.item);
 		if (!effectState.maxEffects)
 			effectState.maxEffects = 0;
 
 		if (effectState.bonus !== null)
 		{
-			sendChat(msg.who, "/roll D20", function(results)
+			sendChat(who, "/roll D20", function(results)
 			{
 				var total = rollResult(results);
 				if (total <= 1)		
@@ -1253,7 +1232,6 @@ on("chat:message", function(msg)
 					effectState.bonus += 2;
 				else if (total == 20)
 					effectState.bonus += 3;
-				log("Item Bonus: " + effectState.bonus);
 
 				resolveOtherEffects(effectState);
 			});			
@@ -1264,7 +1242,7 @@ on("chat:message", function(msg)
 
 	function resolveArmorParts(args, outputFunc)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			tableLookup("AP", total, outputFunc);
@@ -1281,7 +1259,7 @@ on("chat:message", function(msg)
 			}
 			resolveEffectBonus({item: item, bonus: 0, maxEffects: 0, effects: []});
 		}
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			tableLookup("SA", total, armorLookup);
@@ -1298,7 +1276,7 @@ on("chat:message", function(msg)
 			}
 			resolveEffectBonus({item: item, maxEffects: 1, effects: []});
 		}
-		sendChat(msg.who, "/roll 3D20", function(results)
+		sendChat(who, "/roll 3D20", function(results)
 		{
 			var total = rollResult(results);
 			tableLookup("G", total, itemLookup);
@@ -1307,7 +1285,7 @@ on("chat:message", function(msg)
 
 	function resolveUnique()
 	{
-		sendChat(msg.who, "/roll 2D20", function(results)
+		sendChat(who, "/roll 2D20", function(results)
 		{
 			var total = rollResult(results);
 			tableLookup("X", total);
@@ -1316,7 +1294,7 @@ on("chat:message", function(msg)
 
 	function resolveWeaponType(table, outputFunc)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			tableLookup(table, total, outputFunc);
@@ -1325,7 +1303,7 @@ on("chat:message", function(msg)
 
 	function resolveRangedWeapon(outputFunc)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			tableLookup("WR", total, outputFunc);
@@ -1334,7 +1312,7 @@ on("chat:message", function(msg)
 
 	function resolveMeleeWeapon(outputFunc)
 	{
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			if (total <= 12)
@@ -1354,7 +1332,7 @@ on("chat:message", function(msg)
 			}
 			resolveEffectBonus({item: item, bonus: 0, maxEffects: 0, effects: []});
 		}
-		sendChat(msg.who, "/roll D20", function(results)
+		sendChat(who, "/roll D20", function(results)
 		{
 			var total = rollResult(results);
 			if (total <= 5)
@@ -1375,13 +1353,12 @@ on("chat:message", function(msg)
 		var loot = null;
 		table = table.toUpperCase();
 		log("Table Lookup: " + table + "[" + index + "]");
-		var currentTable = state.treasureTable[table];
+		var currentTable = treasureTable[table];
 		if (currentTable)
 		{
 			if (index >= currentTable.length)
 			{
 				index = currentTable.length - 1;
-				log("Clamped too large roll to: " + index);
 			}
 			loot = currentTable[index];
 			if (!loot)
@@ -1416,7 +1393,7 @@ on("chat:message", function(msg)
 
 	function rollCheck(roll, table, isExact, ctnCheckNumber)
 	{
-		sendChat(msg.who, "/roll " + roll, function(results)
+		sendChat(who, "/roll " + roll, function(results)
 		{
 			var result = false;
 			var total = rollResult(results);
@@ -1434,6 +1411,12 @@ on("chat:message", function(msg)
 				sendOutput("Roll (" + roll + "=" + total + "): FAILED (CTN is " + ctnCheckNumber + ")");			
 		});					
 	}
+
+	function sendOutput(text)
+	{
+		sendChat("Treasure", "/w " + who + " " + text);
+	}
+
 
 	function resolveTreasure(args, outputFunc)
 	{
@@ -1484,7 +1467,7 @@ on("chat:message", function(msg)
 			}
 			else if (args.roll)
 			{
-				sendChat(msg.who, "/roll " + args.roll, function(results)
+				sendChat(who, "/roll " + args.roll, function(results)
 				{
 					var loot = rollResult(results) + " " + args.desc;
 					if (outputFunc)
@@ -1494,13 +1477,21 @@ on("chat:message", function(msg)
 				});
 			}
 			else
+			{
 				log("Got a weird argument to resolveTreasure: " + args);
+				sendOutput("Unable to parse treasure args: " + args);
+			}
 		}
 	}
-	if (msg.content.indexOf("!treasure ") === 0)
+
+	this.resolve = function(string)
 	{
-		var treasureString = msg.content.replace("!treasure ", "");
-		sendOutput("*********** " + treasureString + " ***********");
-		resolveTreasure({resolve: treasureString});
-	}
-});
+		resolveTreasure({resolve: string});
+	};
+
+	this.send = function(output)
+	{
+		sendOutput(output);
+	};
+
+}
