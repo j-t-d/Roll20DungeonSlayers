@@ -1,3 +1,5 @@
+// jshint  evil:true
+
 var whatev = whatev || {};
 
 whatev.chars = {};
@@ -37,7 +39,7 @@ stats = {
 		base: null,
 		affects: {
 			"initiative": 1,
-			"mr": {op: "/", arg: 2},
+			"mr": 1,
 			"rat": 1,
 			"animal handling": 1,
 			"climb": 1,
@@ -98,7 +100,8 @@ stats = {
 			"wake up": 1,
 			"work mechanism": 1,
 			"alchemy": 1,
-			"scribe": 1
+			"scribe": 1,
+			"dominate undead": 1
 		}
 	},
 	"in": {
@@ -127,7 +130,8 @@ stats = {
 			"haggle": 1,
 			"intimidate": 1,
 			"riding": 1,
-			"spellcraft": 1
+			"spellcraft": 1,
+			"dominate undead": 1
 		}
 	},
 	"hp": {
@@ -146,7 +150,7 @@ stats = {
 		}
 	},
 	"mr": {
-		base: 1,
+		base: {complex: "1+mob/2"},
 		affects: {
 		}
 	},
@@ -216,10 +220,13 @@ stats = {
 
 spells = {
 	"fire beam": {
-		sm: 1,
+		base: 1
 	},
 	"healing touch": {
-		sm: 1,
+		base: 1
+	},
+	"dominate undead": {
+		base: {complex: "-(mnd+au)/2"}
 	}
 };
 
@@ -511,6 +518,7 @@ skills = {
 		output: "is trying to not covet a shiny"
 	},
 	"haggle": {
+		base: {complex: "in>au?mnd+in:mnd+au"},
 		output: "is trying to haggle"
 	},
 	"hide": {
@@ -529,7 +537,7 @@ skills = {
 		output: "is trying to get a lock open"
 	},
 	"perception": {
-		minimum: 8,
+		base: {complex: "mnd+in>=8?mnd+in:8"},
 		output: "is looking for anything unusual"
 	},
 	"pick pocket": {
@@ -542,13 +550,14 @@ skills = {
 		output: "is trying to resist a disease"
 	},
 	"riding": {
+		base: {complex: "ag>au?mob+ag:mob+au"},
 		output: "is trying to ride an animal"
 	},
 	"scribe": {
 		output: "is trying to scribe a scroll"
 	},
 	"search": {
-		minimum: 8,
+		base: {complex: "mnd+in>=8?mnd+in:8"},
 		output: "is searching for something"
 	},
 	"sneak": {
@@ -570,115 +579,33 @@ skills = {
 		output: "is trying to wake up"
 	},
 	"work mechanism": {
+		base: {complex: "dx>in?mnd+dx:mnd+in"},
 		output: "is trying to work a mechanism"
 	}
 };
 
-function printSkills(characterName)
+
+function printObject(characterName, input)
 {
 	var character = getCharacter(characterName);
 	var key = null;
+	var i = 0;
 
 	if (character)
 	{
 		var id = character.get("_id");
 
-		if (whatev.chars[id].skills)
+		for (i = 0; i < input.length; i++)
 		{
-			for (key in whatev.chars[id].skills)
-			{	
-				if (!whatev.chars[id].skills.hasOwnProperty(key))
-					continue;
+			if (whatev.chars[id][input[i]])
+			{
+				for (key in whatev.chars[id][input[i]])
+				{	
+					if (!whatev.chars[id][input[i]].hasOwnProperty(key))
+						continue;
 
-				log(key + " current(" + whatev.chars[id].skills[key].current + ") base(" + whatev.chars[id].skills[key].base + ") min(" + whatev.chars[id].skills[key].min + ") " + whatev.chars[id].skills[key].output);
-			}
-		}
-	}
-}
-
-function printStats(characterName)
-{
-	var character = getCharacter(characterName);
-	var key = null;
-
-	if (character)
-	{
-		var id = character.get("_id");
-
-		if (whatev.chars[id].stats)
-		{
-			for (key in whatev.chars[id].stats)
-			{	
-				if (!whatev.chars[id].stats.hasOwnProperty(key))
-					continue;
-
-				log(key + " (" + JSON.stringify(whatev.chars[id].stats[key]) + ")");
-			}
-		}
-	}
-}
-
-function printRacials(characterName)
-{
-	var character = getCharacter(characterName);
-	var key = null;
-
-	if (character)
-	{
-		var id = character.get("_id");
-
-		if (whatev.chars[id].racials)
-		{
-			for (key in whatev.chars[id].racials)
-			{	
-				if (!whatev.chars[id].racials.hasOwnProperty(key))
-					continue;
-
-				log(key + " (" + JSON.stringify(whatev.chars[id].racials[key]) + ")");
-			}
-		}
-	}
-}
-
-function printTalents(characterName)
-{
-	var character = getCharacter(characterName);
-	var key = null;
-
-	if (character)
-	{
-		var id = character.get("_id");
-
-		if (whatev.chars[id].talents)
-		{
-			for (key in whatev.chars[id].talents)
-			{	
-				if (!whatev.chars[id].talents.hasOwnProperty(key))
-					continue;
-
-				log(key + " (" + JSON.stringify(whatev.chars[id].talents[key]) + ")");
-			}
-		}
-	}
-}
-
-function printSpells(characterName)
-{
-	var character = getCharacter(characterName);
-	var key = null;
-
-	if (character)
-	{
-		var id = character.get("_id");
-
-		if (whatev.chars[id].spells)
-		{
-			for (key in whatev.chars[id].spells)
-			{	
-				if (!whatev.chars[id].spells.hasOwnProperty(key))
-					continue;
-
-				log(key + " base(" + whatev.chars[id].spells[key].base + ") current(" + whatev.chars[id].spells[key].current + ")");
+					log(key + " (" + JSON.stringify(whatev.chars[id][input[i]][key]) + ")");
+				}
 			}
 		}
 	}
@@ -703,7 +630,7 @@ function loadSkills(characterName)
 				if (!skills.hasOwnProperty(key))
 					continue;
 
-				whatev.chars[id].skills[key] = {output: skills[key].output, current: (skills[key].base ? skills[key].base : 0), affectedBy: {}, base: (skills[key].base ? skills[key].base : 0), min: (skills[key].minimum ? skills[key].minimum : 0)};
+				whatev.chars[id].skills[key] = {output: skills[key].output, affectedBy: {}, base: (skills[key].base ? skills[key].base : 0)};
 			}
 		}
 	}
@@ -718,8 +645,6 @@ function prepStats(characterName)
 
 	if (character)
 	{
-		var id = character.get("_id");
-
 		if (stats)
 		{
 			attributes = getAttributes(character);
@@ -764,10 +689,15 @@ function loadStats(characterName)
 
 				whatev.chars[id].stats[key] = {};
 				whatev.chars[id].stats[key].affects = stats[key].affects;
+				whatev.chars[id].stats[key].affectedBy = {};
 
 				if (stats[key].base === null)
 				{
 					stat = getAttributeValue(attributes, key.toUpperCase());
+
+					if (stat === null)
+						stat = 0;
+
 					whatev.chars[id].stats[key].base = stat;
 				}
 				else
@@ -857,59 +787,7 @@ function loadSpells(characterName)
 				if (!spells.hasOwnProperty(key))
 					continue;
 
-				whatev.chars[id].spells[key] = {base: spells[key].sm};
-			}
-		}
-	}
-}
-
-function processStats(characterName)
-{
-	var character = getCharacter(characterName);
-	var key = null;
-	var target = null;
-
-	if (character)
-	{
-		var id = character.get("_id");
-
-		if (whatev.chars[id].stats)
-		{
-			for (key in whatev.chars[id].stats)
-			{	
-				if (!whatev.chars[id].stats.hasOwnProperty(key))
-					continue;
-
-				// Step through affects, apply to targets
-				for (target in whatev.chars[id].stats[key].affects)
-				{
-					// Test for stat, then skill
-					if (whatev.chars[id].stats.hasOwnProperty(target))
-					{
-						// if target has a current value, continue, otherwise establish a current for target with its base
-						if (!whatev.chars[id].stats[target].hasOwnProperty("current"))
-							whatev.chars[id].stats[target].current = whatev.chars[id].stats[target].base;
-
-						// add to current if it is a number, otherwise process an operation
-						if (isNumber(whatev.chars[id].stats[key].affects[target]))
-							whatev.chars[id].stats[target].current += (whatev.chars[id].stats[key].base * whatev.chars[id].stats[key].affects[target]);
-						else
-						{
-							if (whatev.chars[id].stats[key].affects[target].hasOwnProperty("op"))
-							{
-								if (whatev.chars[id].stats[key].affects[target].op == "/")
-								{
-									whatev.chars[id].stats[target].current += (whatev.chars[id].stats[key].base / whatev.chars[id].stats[key].affects[target].arg);
-								}
-							}
-						}
-					}
-					else if (whatev.chars[id].skills.hasOwnProperty(target))
-					{
-
-					}
-
-				}
+				whatev.chars[id].spells[key] = {base: spells[key].base, affectedBy: {}};
 			}
 		}
 	}
@@ -917,22 +795,27 @@ function processStats(characterName)
 
 function processLoop(id, key, target, input, check)
 {
+	var tmp = null;
+	var regex = null;
+
 	if (whatev.chars[id][check].hasOwnProperty(target))
 	{
-		// if target has a current value, continue, otherwise establish a current for target with its base
-		if (!whatev.chars[id][check][target].hasOwnProperty("current"))
-			whatev.chars[id][check][target].current = whatev.chars[id][check][target].base;
-
-		// add to current if it is a number, otherwise process an operation
 		if (isNumber(whatev.chars[id][input][key].affects[target]))
-			whatev.chars[id][check][target].current += (whatev.chars[id][input][key].base * whatev.chars[id][input][key].affects[target]);
-		else
 		{
-			if (whatev.chars[id][input][key].affects[target].hasOwnProperty("op"))
+			if (whatev.chars[id][check][target].hasOwnProperty("affectedBy"))
 			{
-				if (whatev.chars[id][input][key].affects[target].op == "/")
+				// Don't add it to affected by if it is going into a complex
+				if (!isNumber(whatev.chars[id][check][target].base))
+				{					
+					regex = new RegExp(key, "gi");
+					whatev.chars[id][check][target].base.complex = whatev.chars[id][check][target].base.complex.replace(regex, (whatev.chars[id][input][key].base * whatev.chars[id][input][key].affects[target]));
+				}
+				else
 				{
-					whatev.chars[id][check][target].current += (whatev.chars[id][input][key].base / whatev.chars[id][input][key].affects[target].arg);
+					tmp = {};
+					tmp[key] = (whatev.chars[id][input][key].base * whatev.chars[id][input][key].affects[target]);
+
+					_.extend(whatev.chars[id][check][target].affectedBy, tmp);
 				}
 			}
 		}
@@ -969,89 +852,45 @@ function processData(characterName, input)
 	}
 }
 
-function processDataOrig(characterName, input)
+function processMath(characterName)
 {
 	var character = getCharacter(characterName);
 	var key = null;
-	var target = null;
+	var input = ["skills", "spells", "stats"];
+	var i = 0;
+	var token = null;
 
 	if (character)
 	{
 		var id = character.get("_id");
 
-		if (whatev.chars[id][input])
+		for (i = 0; i < input.length; i++)
 		{
-			for (key in whatev.chars[id][input])
-			{	
-				if (!whatev.chars[id][input].hasOwnProperty(key))
-					continue;
+			if (whatev.chars[id][input[i]])
+			{
+				for (key in whatev.chars[id][input[i]])
+				{	
+					if (!whatev.chars[id][input[i]].hasOwnProperty(key))
+						continue;
 
-				// Step through affects, apply to targets
-				for (target in whatev.chars[id][input][key].affects)
-				{
-					// Test for stat, then skill, then spells
-					processLoop(id, key, target, input, "stats");
-					processLoop(id, key, target, input, "skills");
-					processLoop(id, key, target, input, "spells");
-
-					if (whatev.chars[id].stats.hasOwnProperty(target))
+					// Step through all values to set its current
+					if (whatev.chars[id][input[i]][key].hasOwnProperty("affectedBy"))
 					{
-						// if target has a current value, continue, otherwise establish a current for target with its base
-						if (!whatev.chars[id].stats[target].hasOwnProperty("current"))
-							whatev.chars[id].stats[target].current = whatev.chars[id].stats[target].base;
-
-						// add to current if it is a number, otherwise process an operation
-						if (isNumber(whatev.chars[id][input][key].affects[target]))
-							whatev.chars[id].stats[target].current += (whatev.chars[id][input][key].base * whatev.chars[id][input][key].affects[target]);
+						if (isNumber(whatev.chars[id][input[i]][key].base))
+							whatev.chars[id][input[i]][key].current = whatev.chars[id][input[i]][key].base;
 						else
 						{
-							if (whatev.chars[id][input][key].affects[target].hasOwnProperty("op"))
-							{
-								if (whatev.chars[id][input][key].affects[target].op == "/")
-								{
-									whatev.chars[id].stats[target].current += (whatev.chars[id][input][key].base / whatev.chars[id][input][key].affects[target].arg);
-								}
-							}
+							whatev.chars[id][input[i]][key].current = eval(whatev.chars[id][input[i]][key].base.complex);
 						}
-					}
-					else if (whatev.chars[id].skills.hasOwnProperty(target))
-					{
-						// if target has a current value, continue, otherwise establish a current for target with its base
-						if (!whatev.chars[id].skills[target].hasOwnProperty("current"))
-							whatev.chars[id].skills[target].current = whatev.chars[id].skills[target].base;
 
-						// add to current if it is a number, otherwise process an operation
-						if (isNumber(whatev.chars[id][input][key].affects[target]))
-							whatev.chars[id].skills[target].current += (whatev.chars[id][input][key].base * whatev.chars[id][input][key].affects[target]);
-						else
+						// Add em up!
+						for (token in whatev.chars[id][input[i]][key].affectedBy)
 						{
-							if (whatev.chars[id][input][key].affects[target].hasOwnProperty("op"))
+							if (isNumber(whatev.chars[id][input[i]][key].affectedBy[token]))
+								whatev.chars[id][input[i]][key].current += whatev.chars[id][input[i]][key].affectedBy[token];
+							else
 							{
-								if (whatev.chars[id][input][key].affects[target].op == "/")
-								{
-									whatev.chars[id].skills[target].current += (whatev.chars[id][input][key].base / whatev.chars[id][input][key].affects[target].arg);
-								}
-							}
-						}
-					}
-					else if (whatev.chars[id].spells.hasOwnProperty(target))
-					{
-						// if target has a current value, continue, otherwise establish a current for target with its base
-						if (!whatev.chars[id].spells[target].hasOwnProperty("current"))
-							whatev.chars[id].spells[target].current = whatev.chars[id].spells[target].base;
-
-						log(whatev.chars[id].spells[target]);
-						// add to current if it is a number, otherwise process an operation
-						if (isNumber(whatev.chars[id][input][key].affects[target]))
-							whatev.chars[id].spells[target].current += (whatev.chars[id][input][key].base * whatev.chars[id][input][key].affects[target]);
-						else
-						{
-							if (whatev.chars[id][input][key].affects[target].hasOwnProperty("op"))
-							{
-								if (whatev.chars[id][input][key].affects[target].op == "/")
-								{
-									whatev.chars[id].spells[target].current += (whatev.chars[id][input][key].base / whatev.chars[id][input][key].affects[target].arg);
-								}
+								whatev.chars[id][input[i]][key].current += eval(whatev.chars[id][input[i]][key].affectedBy[token].complex);
 							}
 						}
 					}
@@ -1065,7 +904,6 @@ on("ready", function(msg)
 {
 	var characterName = "Street.Legal";
 
-
 	log("** Before ****************************");
 	loadSkills(characterName);
 	prepStats(characterName);
@@ -1076,23 +914,30 @@ on("ready", function(msg)
 
 	if (true)
 	{
-		printSkills(characterName);
-		printStats(characterName);
-		printRacials(characterName);
-		printTalents(characterName);
-		printSpells(characterName);
+		printObject(characterName, ["skills","stats","racials","talents","spells"]);
 	}
+
+	log("** Proccessing ****************************");
 
 	processData(characterName, "talents");
 	processData(characterName, "racials");
 	processData(characterName, "stats");
+	processMath(characterName);
+	//processFinal(characterName);
 
 	log("** After ****************************");
-	printStats(characterName);
-	log("******************************");
-	printSkills(characterName);
-	log("******************************");
-	printSpells(characterName);
-
-
+	printObject(characterName, ["stats", "skills", "spells"]);
 });
+
+// * TODO: Make sure minimum is used (Make sure list of affectedBy changes if minimum is used instead of stats)
+// TODO: Make sure > skill modifer comparisons are used
+// * TODO: Add list of affectedBy to each skill, spell
+// TODO: Add complex math to deal with SM's, Racials, etc
+// TODO: Re-calc on attribute update
+// TODO: Build into rolling system
+// TODO: Build into help system
+// TODO: Build into command system
+// TODO: Handle complex as a base
+// * TODO: Remove Minimums
+// TODO: Add a final tally step
+// TODO: 
