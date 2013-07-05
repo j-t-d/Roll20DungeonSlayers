@@ -23,13 +23,13 @@ whatev.gmChatCommands = (function()
 
 	function combatStart(msg, args)
 	{
-		if (commandCheck(msg))
+		if (whatev.gmChatCommands.commandCheck(msg))
 			whatev.encounter.combatStart(msg.who);
 	}
 
 	function combatEnd(msg, args)
 	{
-		if (commandCheck(msg))
+		if (whatev.gmChatCommands.commandCheck(msg))
 			whatev.encounter.combatEnd(msg.who);
 	}
 
@@ -50,22 +50,22 @@ whatev.gmChatCommands = (function()
 				sendChat("GM", "/w " + msg.who + " You are not the GM. Please use !gm identify to fix this.");
 			return rtn;			
 		},
-		register: function()
+		ready: function()
 		{
-			registerCommands("gm", 
+			whatev.commands.register("gm", 
 			{
 				help: "List of GM commands",
 				commands: 
 				{
 					identify: 
 					{ 
-						func: gmHandleIdentify,
+						func: identify,
 						help: "Used to identify a GM to unlock the GM commands",
 						usage: "Use !gm identify to get whispered a special key. Then use !gm identify <key> to identify."
 					},
 					treasure:
 					{
-						func: gmHandleTreasure,
+						func: treasure,
 						help: "Used to roll treasure.",
 						usage: "Use !gm treasure <treasure string> where treasure string is similar to that in the rulset. ie: A:16,#B:20"
 					},
@@ -76,13 +76,13 @@ whatev.gmChatCommands = (function()
 						{
 							start:
 							{
-								func: gmHandleCombatStart,
+								func: combatStart,
 								help: "Starts combat",
 								usage: "Use !gm combat start to initialize the turn order pane. It uses bar 3 for creatures, and the attributes in each character sheet. Also starts any turn timers"
 							},
 							end:
 							{
-								func: gmHandleCombatEnd,
+								func: combatEnd,
 								help: "Ends combat",
 								usage: " Use !gm combat end to hide the turn order pane and turn timers."
 							}
@@ -97,5 +97,5 @@ whatev.gmChatCommands = (function()
 
 on("ready", function()
 {
-	whatev.gmChatCommands.register();
+	whatev.gmChatCommands.ready();
 });

@@ -84,15 +84,19 @@ whatev.encounter = (function()
 				}
 			}
 		},
+        ready: function(msg)
+        {
+            whatev.commands.register("endTurn",
+            { 
+                func: whatev.encounter.endTurn,
+                help: "Used during combat to end player turn",
+                usage: "Use !endTurn to finish your turn and move to the next member on the initiative pane."
+            });            
+        }
 	};
 })();
 
 on("ready", function()
 {
-	registerCommands("endTurn",
-	{ 
-		func: whatev.encounter.endTurn,
-		help: "Used during combat to end player turn",
-		usage: "Use !endTurn to finish your turn and move to the next member on the initiative pane."
-	});
+    whatev.encounter.ready();
 });
