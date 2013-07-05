@@ -20,19 +20,13 @@ function gmHandleIdentify(msg, args)
 function gmHandleCombatStart(msg, args)
 {
 	if (gmCommandCheck(msg))
-	{
-		var encounter = new Encounter();
-		encounter.combatStart(msg.who);
-	}
+		whatev.encounter.combatStart(msg.who);
 }
 
 function gmHandleCombatEnd(msg, args)
 {
 	if (gmCommandCheck(msg))
-	{
-		var encounter = new Encounter();
-		encounter.combatEnd(msg.who);
-	}
+		whatev.encounter.combatEnd(msg.who);
 }
 
 function gmHandleTreasure(msg, args)
