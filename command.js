@@ -84,8 +84,8 @@ whatev.commands = (function()
 						else
 							help(msg, commandList);
 					}
-					else
-						sendChat(msg.who, "/w " + msg.who + " I do not know of this command: " + msg.content);		
+//					else
+//						sendChat(msg.who, "/w " + msg.who + " I do not know of this command: " + msg.content);		
 				}
 			}
 		}

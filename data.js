@@ -1075,7 +1075,7 @@ function doGMRoll(msg, someArgs)
 
 function registerCommands()
 {
-	whatev.commands.registerMultiple({
+	whatev.commands.registerCommands({
 		setup:
 		{ 
 			func: doSetup,
