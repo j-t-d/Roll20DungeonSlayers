@@ -841,223 +841,272 @@ function affectedBySummation(affectedBy)
 	return rtn;
 }
 
+function doSetup(msg, args)
+{
+	character = getCharacter(msg.who);
+
+	if (character)
+	{
+		id = character.get("_id");
+		attributes = null;
+		key = null;
+		var stat = null;
+		var abilities = null;
+		var ability = null;
+
+		if (character)
+		{
+			if (stats)
+			{
+				attributes = getAttributes(character);
+
+				for (var key in stats)
+				{
+					if (!stats.hasOwnProperty(key))
+						continue;
+
+					stat = getAttribute(attributes, key);
+
+					if (stat === null)
+					{
+						createAttribute(character, key);
+					}
+				}
+			}
+
+			if ((abilities = getAbilities(character)))
+			{
+				if (!(ability = getAbility(abilities, "End Turn")))
+				{
+					ability = createAbility(character, "End Turn");
+					ability.set("action", "!endTurn");
+				}
+			}
+
+			baselineCharacter(character);
+
+			processData(character, id, "talents");
+			processData(character, id, "racials");
+			processData(character, id, "stats");
+			processMath(character, id);
+
+			state.whatev.chars[id].loaded = true;
+			if (false)
+				printObject(id);
+
+			sendChat("Setup Bot", "/w " + msg.who + " finished with initial setup.");
+		}
+	}
+	else
+		sendChat("Setup Bot", "/w " + msg.who + " you are not a character.");	
+}
+
+function doCombat(msg, someArgs)
+{
+	var combat = {"!def": "def", "!melee": "mat", "!ranged": "rat", "!spell": "spc", "!tspell": "tsc"};
+	var args = msg.content.split(" ");
+
+	character = getCharacter(msg.who);
+
+	if (character)
+	{
+		id = character.get("_id");
+		checkValue = state.whatev.chars[id].stats[combat[args[0]]].current;
+		summation = affectedBySummation(state.whatev.chars[id].stats[combat[args[0]]].affectedBy);
+		message = msg.content.replace(args[0], "").toLowerCase();
+
+		// Leftover data to handle
+		if (message.length > 0)
+		{
+			bonus = tallyLeftovers(message);
+			
+			if (bonus)
+			{
+				checkValue += bonus;
+				summation.push(["", Math.abs(bonus), sign(bonus)]);
+				message = "";
+			}
+		}
+
+		rollResults = roll(checkValue);
+		output = ctnFormat(summation);
+		output = rollFormat(msg.who, "Combat roll for " + combat[args[0]].toUpperCase(), output, checkValue, rollResults);
+
+		sendChat(msg.who, "/direct " + output);
+	}
+	else
+		sendChat(msg.who, "/em tried to do a combat roll but they aren't even a character!");	
+}
+
+function doChk(msg, someArgs)
+{
+	message = msg.content.replace("!chk", "").toLowerCase();
+
+	character = getCharacter(msg.who);
+
+	if (character)
+	{
+		var skill = null;
+		id = character.get("_id");
+
+		for (var key in state.whatev.chars[id].skills)
+		{
+			if (!state.whatev.chars[id].skills.hasOwnProperty(key))
+				continue;
+
+			if (msg.content.indexOf(key) !== -1)
+			{
+				skill = key;
+				message = message.replace(key, "").toLowerCase();
+				break;
+			}
+		}
+
+		if (skill)
+		{
+			checkValue = state.whatev.chars[id].skills[skill].current;
+			summation = affectedBySummation(state.whatev.chars[id].skills[skill].affectedBy);
+			message = msg.content.replace(skill, "").toLowerCase();
+
+			// Leftover data to handle
+			if (message.length > 0)
+			{
+				bonus = tallyLeftovers(message);
+				
+				if (bonus)
+				{
+					checkValue += bonus;
+					summation.push(["", Math.abs(bonus), sign(bonus)]);
+					message = "";
+				}
+			}
+
+			rollResults = roll(checkValue);
+			output = ctnFormat(summation);
+			output = rollFormat(msg.who, msg.who + " " + state.whatev.chars[id].skills[skill].output, output, checkValue, rollResults);
+
+			sendChat(msg.who, "/direct " + output);
+		}
+	}
+	else
+		sendChat(msg.who, "/em tried to do a skill check but they aren't even a character!");	
+}
+
+function doCast(msg, someArgs)
+{
+	message = msg.content.replace("!cast", "").toLowerCase();
+
+	character = getCharacter(msg.who);
+
+	if (character)
+	{
+		var spell = null;
+		id = character.get("_id");
+
+		for (var key in state.whatev.chars[id].spells)
+		{
+			if (!state.whatev.chars[id].spells.hasOwnProperty(key))
+				continue;
+
+			if (msg.content.indexOf(key) !== -1)
+			{
+				spell = key;
+				message = message.replace(key, "").toLowerCase();
+				break;
+			}
+		}
+
+		if (spell)
+		{
+			checkValue = state.whatev.chars[id].spells[spell].current;
+			summation = affectedBySummation(state.whatev.chars[id].spells[spell].affectedBy);
+			message = msg.content.replace(spell, "").toLowerCase();
+
+			// Leftover data to handle
+			if (message.length > 0)
+			{
+				bonus = tallyLeftovers(message);
+				
+				if (bonus)
+				{
+					checkValue += bonus;
+					summation.push(["", Math.abs(bonus), sign(bonus)]);
+					message = "";
+				}
+			}
+
+			rollResults = roll(checkValue);
+			output = ctnFormat(summation);
+			output = rollFormat(msg.who, msg.who + " tries to cast " + spell, output, checkValue, rollResults);
+
+			sendChat(msg.who, "/direct " + output);
+		}
+	}
+	else
+		sendChat(msg.who, "/em tried to do a skill check but they aren't even a character!");	
+}
+
+function registerCommands()
+{
+	whatev.commands.registerCommands({
+		setup:
+		{ 
+			func: doSetup,
+			help: "Sets up a new character",
+			usage: "Use !setup to setup a new character."
+		},
+		def:
+		{
+			func: doCombat,
+			help: "Defensive roll",
+			usage: "!def a defensive roll"
+		},
+		melee:
+		{
+			func: doCombat,
+			help: "melee roll",
+			usage: "!melee a roll"
+		},
+		ranged:
+		{
+			func: doCombat,
+			help: "ranged roll",
+			usage: "!ranged a roll"
+		},
+		spell:
+		{
+			func:doCombat,
+			help: "Spell cast",
+			usage: "!spell a spell"
+		},
+		tspell:
+		{
+			func: doCombat,
+			help: "Target cast",
+			usage: "!tspell a spell"
+		},
+		chk:
+		{
+			func: doChk,
+			help: "chk",
+			usage: "!chk"
+		},
+		cast:
+		{
+			func: doCast,
+			help: "cast",
+			usage: "!cast"
+		}
+	});
+}
+
+
 on("ready", function(msg)
 {
+	registerCommands();
+
 	if (!state.whatev)
 		state.whatev = whatev;
 	if (!state.whatev.chars)
 		state.whatev.chars = {};
-});
-
-on("chat:message", function(msg) 
-{
-	var character = null;
-	var attributes = null;
-	var id = null;
-	var summation = null;
-	var key = null;
-	var args = msg.content.split(" ");
-	var combat = {"!def": "def", "!melee": "mat", "!ranged": "rat", "!spell": "spc", "!tspell": "tsc"};
-
-	if (msg.type == "api")
-	{
-		if (msg.content.indexOf("!setup") !== -1)
-		{
-			character = getCharacter(msg.who);
-
-			if (character)
-			{
-				id = character.get("_id");
-				attributes = null;
-				key = null;
-				var stat = null;
-				var abilities = null;
-				var ability = null;
-
-				if (character)
-				{
-					if (stats)
-					{
-						attributes = getAttributes(character);
-
-						for (key in stats)
-						{
-							if (!stats.hasOwnProperty(key))
-								continue;
-
-							stat = getAttribute(attributes, key);
-
-							if (stat === null)
-							{
-								createAttribute(character, key);
-							}
-						}
-					}
-
-					if ((abilities = getAbilities(character)))
-					{
-						if (!(ability = getAbility(abilities, "End Turn")))
-						{
-							ability = createAbility(character, "End Turn");
-							ability.set("action", "!endTurn");
-						}
-					}
-
-					baselineCharacter(character);
-
-					processData(character, id, "talents");
-					processData(character, id, "racials");
-					processData(character, id, "stats");
-					processMath(character, id);
-
-					state.whatev.chars[id].loaded = true;
-					if (false)
-						printObject(id);
-
-					sendChat("Setup Bot", "/w " + msg.who + " finished with initial setup.");
-				}
-			}
-			else
-				sendChat("Setup Bot", "/w " + msg.who + " you are not a character.");
-		}
-		else if (args[0] in combat)
-		{
-			character = getCharacter(msg.who);
-
-			if (character)
-			{
-				id = character.get("_id");
-				checkValue = state.whatev.chars[id].stats[combat[args[0]]].current;
-				summation = affectedBySummation(state.whatev.chars[id].stats[combat[args[0]]].affectedBy);
-				message = msg.content.replace(args[0], "").toLowerCase();
-
-				// Leftover data to handle
-				if (message.length > 0)
-				{
-					bonus = tallyLeftovers(message);
-					
-					if (bonus)
-					{
-						checkValue += bonus;
-						summation.push(["", Math.abs(bonus), sign(bonus)]);
-						message = "";
-					}
-				}
-
-				rollResults = roll(checkValue);
-				output = ctnFormat(summation);
-				output = rollFormat(msg.who, "Combat roll for " + combat[args[0]].toUpperCase(), output, checkValue, rollResults);
-
-				sendChat(msg.who, "/direct " + output);
-			}
-			else
-				sendChat(msg.who, "/em tried to do a combat roll but they aren't even a character!");
-		}
-		else if (msg.content.indexOf("!chk") !== -1)
-		{
-			message = msg.content.replace("!chk", "").toLowerCase();
-
-			character = getCharacter(msg.who);
-
-			if (character)
-			{
-				var skill = null;
-				id = character.get("_id");
-
-				for (key in state.whatev.chars[id].skills)
-				{
-					if (!state.whatev.chars[id].skills.hasOwnProperty(key))
-						continue;
-
-					if (msg.content.indexOf(key) !== -1)
-					{
-						skill = key;
-						message = message.replace(key, "").toLowerCase();
-						break;
-					}
-				}
-
-				if (skill)
-				{
-					checkValue = state.whatev.chars[id].skills[skill].current;
-					summation = affectedBySummation(state.whatev.chars[id].skills[skill].affectedBy);
-					message = msg.content.replace(skill, "").toLowerCase();
-
-					// Leftover data to handle
-					if (message.length > 0)
-					{
-						bonus = tallyLeftovers(message);
-						
-						if (bonus)
-						{
-							checkValue += bonus;
-							summation.push(["", Math.abs(bonus), sign(bonus)]);
-							message = "";
-						}
-					}
-
-					rollResults = roll(checkValue);
-					output = ctnFormat(summation);
-					output = rollFormat(msg.who, msg.who + " " + state.whatev.chars[id].skills[skill].output, output, checkValue, rollResults);
-
-					sendChat(msg.who, "/direct " + output);
-				}
-			}
-			else
-				sendChat(msg.who, "/em tried to do a skill check but they aren't even a character!");
-		}
-		else if (msg.content.indexOf("!cast") !== -1)
-		{
-			message = msg.content.replace("!cast", "").toLowerCase();
-
-			character = getCharacter(msg.who);
-
-			if (character)
-			{
-				var spell = null;
-				id = character.get("_id");
-
-				for (key in state.whatev.chars[id].spells)
-				{
-					if (!state.whatev.chars[id].spells.hasOwnProperty(key))
-						continue;
-
-					if (msg.content.indexOf(key) !== -1)
-					{
-						spell = key;
-						message = message.replace(key, "").toLowerCase();
-						break;
-					}
-				}
-
-				if (spell)
-				{
-					checkValue = state.whatev.chars[id].spells[spell].current;
-					summation = affectedBySummation(state.whatev.chars[id].spells[spell].affectedBy);
-					message = msg.content.replace(spell, "").toLowerCase();
-
-					// Leftover data to handle
-					if (message.length > 0)
-					{
-						bonus = tallyLeftovers(message);
-						
-						if (bonus)
-						{
-							checkValue += bonus;
-							summation.push(["", Math.abs(bonus), sign(bonus)]);
-							message = "";
-						}
-					}
-
-					rollResults = roll(checkValue);
-					output = ctnFormat(summation);
-					output = rollFormat(msg.who, msg.who + " tries to cast " + spell, output, checkValue, rollResults);
-
-					sendChat(msg.who, "/direct " + output);
-				}
-			}
-			else
-				sendChat(msg.who, "/em tried to do a skill check but they aren't even a character!");
-		}
-	}
 });
