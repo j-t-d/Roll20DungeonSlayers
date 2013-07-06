@@ -1046,6 +1046,33 @@ function doCast(msg, someArgs)
 		sendChat(msg.who, "/em tried to do a skill check but they aren't even a character!");	
 }
 
+function doGMRoll(msg, someArgs)
+{
+	message = msg.content.replace("!gmroll", "").toLowerCase();
+
+	checkValue = 0;
+	summation = [];
+
+	// Leftover data to handle
+	if (message.length > 0)
+	{
+		bonus = tallyLeftovers(message);
+		
+		if (bonus)
+		{
+			checkValue += bonus;
+			summation.push(["", Math.abs(bonus), sign(bonus)]);
+			message = "";
+		}
+	}
+
+	rollResults = roll(checkValue);
+	output = ctnFormat(summation);
+	output = rollFormat(msg.who, msg.who + " checks ", output, checkValue, rollResults);
+
+	sendChat(msg.who, "/w " + msg.who + " " + output);
+}
+
 function registerCommands()
 {
 	whatev.commands.registerMultiple({
@@ -1096,6 +1123,12 @@ function registerCommands()
 			func: doCast,
 			help: "cast",
 			usage: "!cast"
+		},
+		gmroll:
+		{
+			func: doGMRoll,
+			help: "gmroll",
+			usage: "!gmroll"
 		}
 	});
 }
