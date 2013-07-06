@@ -737,8 +737,6 @@ function processLoop(id, key, target, input, check)
 					tmp[key] = (state.whatev.chars[id][input][key].base * state.whatev.chars[id][input][key].affects[target]);
 
 					_.extend(state.whatev.chars[id][check][target].affectedBy, tmp);
-					if (tmp == "unkempt")
-						log("Unkempt on " + key);
 				}
 			}
 		}
