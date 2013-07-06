@@ -63,6 +63,11 @@ whatev.commands = (function()
 		{
 			registeredCommands[command] = table;
 		},
+		registerMultiple: function(commands)
+		{
+			for (var key in commands)
+				this.register(key, commands[key]);
+		},
 		parse: function(msg)
 		{
 			if (msg.type == "api")
