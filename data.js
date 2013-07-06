@@ -1075,7 +1075,7 @@ function doGMRoll(msg, someArgs)
 
 function registerCommands()
 {
-	whatev.commands.registerCommands({
+	whatev.commands.registerMultiple({
 		setup:
 		{ 
 			func: doSetup,
@@ -1136,10 +1136,9 @@ function registerCommands()
 
 on("ready", function(msg)
 {
-	registerCommands();
-
 	if (!state.whatev)
 		state.whatev = whatev;
 	if (!state.whatev.chars)
 		state.whatev.chars = {};
+	registerCommands();
 });
