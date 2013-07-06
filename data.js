@@ -1048,7 +1048,7 @@ function doCast(msg, someArgs)
 
 function registerCommands()
 {
-	whatev.commands.registerCommands({
+	whatev.commands.registerMultiple({
 		setup:
 		{ 
 			func: doSetup,
