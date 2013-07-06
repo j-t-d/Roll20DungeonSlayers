@@ -170,6 +170,11 @@ function isNumber(n)
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+function sign(n)
+{
+	return n ? n < 0 ? -1 : 1 : 0;
+}
+
 function tallyLeftovers(msg)
 {
 	rtn = null;
@@ -292,8 +297,8 @@ function ctnFormat(ctnData)
 		for (i = 0; i < ctnData.length; i++)
 		{
 			if (i !== 0)
-				rtn += "<td style='" + "'>" + ctnData[i][2] + "</td>";
-			rtn += "<td style='" + norm + (ctnData[i][2] === "+" ? plus : minus) + "'>" + ctnData[i][0] + "(" + ctnData[i][1] + ")" + "</td>";
+				rtn += "<td style='" + "'>" + (ctnData[i][2] === 1 ? "+" : "-") + "</td>";
+			rtn += "<td style='" + norm + (ctnData[i][2] === 1 ? plus : minus) + "'>" + ctnData[i][0] + "(" + ctnData[i][1] + ")" + "</td>";
 		}
 
 		rtn += "</tr></table>";
