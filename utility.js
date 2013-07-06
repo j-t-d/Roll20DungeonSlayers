@@ -369,7 +369,7 @@ function rollFormat(who, msg, ctnData, ctn, rollData)
 	return rtn;
 }
 
-on("chat:message", function(msg) 
+/*on("chat:message", function(msg) 
 {
 	if (msg.type == "api" && msg.content.indexOf("!setup") !== -1)
 	{
@@ -412,4 +412,4 @@ on("chat:message", function(msg)
 			sendChat(msg.who, "/w " + msg.who + " finished with initial setup.");
 		}
 	}
-});
+});*/
