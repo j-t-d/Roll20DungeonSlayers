@@ -1059,5 +1059,30 @@ on("chat:message", function(msg)
 			else
 				sendChat(msg.who, "/em tried to do a skill check but they aren't even a character!");
 		}
+		else if (msg.content.indexOf("!gmroll") !== -1)
+		{
+			message = msg.content.replace("!gmroll", "").toLowerCase();
+			checkValue = 0;
+			summation = [];
+
+			// Leftover data to handle
+			if (message.length > 0)
+			{
+				bonus = tallyLeftovers(message);
+				
+				if (bonus)
+				{
+					checkValue += bonus;
+					summation.push(["", Math.abs(bonus), sign(bonus)]);
+					message = "";
+				}
+			}
+
+			rollResults = roll(checkValue);
+			output = ctnFormat(summation);
+			output = rollFormat(msg.who, msg.who + " checks ", output, checkValue, rollResults);
+
+			sendChat(msg.who, "/w " + msg.who + " " + output);
+		}
 	}
 });
